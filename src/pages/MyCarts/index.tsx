@@ -11,7 +11,6 @@ import {
     AreaInfoProduct,
     LeftArea,
     RightArea,
-    AreaButtons,
 } from "./styles";
 import Product from "../../models/Product";
 
@@ -24,9 +23,9 @@ const MyCarts: React.FC = () => {
         setUser(JSON.parse(localStorage.getItem("logged") || "{}"));
     }, []);
 
-    if (data.length == 0) {
+    if (data.length === 0) {
         allCarts = JSON.parse(localStorage.getItem("carts") || "[]");
-        allCarts.map((item) => {
+        allCarts.forEach((item) => {
             if (item.idUser === user?.id) {
                 setData(item.products || []);
             }
@@ -39,7 +38,7 @@ const MyCarts: React.FC = () => {
             <Content>
                 {data.map((product) => (
                     <ItemProduct key={product.id}>
-                        <img src={product.urlPhoto} alt="Photo Product" />
+                        <img src={product.urlPhoto} alt="Product" />
                         <AreaInfoProduct>
                             <LeftArea>
                                 <h3>{product.name}</h3>

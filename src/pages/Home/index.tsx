@@ -44,14 +44,14 @@ const Home: React.FC = () => {
         );
 
         let myCart: Cart = {};
-        allCarts.map((item, index) => {
+        allCarts.forEach((item, index) => {
             if (item.idUser === user?.id) {
                 myCart = item;
                 indexCart = index;
             }
         });
 
-        myCart.products?.map((item, index) => {
+        myCart.products?.forEach((item, index) => {
             if (item.id === product.id) {
                 let myAmount: number = item.amount || 0;
                 let myProduct: Product = {
@@ -87,7 +87,7 @@ const Home: React.FC = () => {
                 allCarts.push(myCart);
             } else {
                 let a = 0;
-                allCarts.map((item, index) => {
+                allCarts.forEach((item, index) => {
                     if (item.idUser === user?.id) {
                         a = index;
                     }
@@ -107,7 +107,7 @@ const Home: React.FC = () => {
             <Content>
                 {data.map((product) => (
                     <ItemProduct key={product.id}>
-                        <img src={product.urlPhoto} alt="Photo Product" />
+                        <img src={product.urlPhoto} alt="Product" />
                         <AreaInfoProduct>
                             <LeftArea>
                                 <h3>{product.name}</h3>
