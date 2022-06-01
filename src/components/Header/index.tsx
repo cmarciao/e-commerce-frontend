@@ -9,23 +9,23 @@ import User from "../../models/User";
 
 import { Container, InfoUser, ItemInput, AreaIcons } from "./styles";
 import Button from "../Button";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type HeaderProps = {
     page: string;
 };
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const user: User = JSON.parse(localStorage.getItem("logged") || "{}");
 
     if (user.name == null) {
-        history.push("/");
+        navigate("/");
     }
 
     function handleLogOut() {
         localStorage.setItem("logged", "-1");
-        history.push("/");
+        navigate("/");
     }
 
     return (

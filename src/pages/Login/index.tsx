@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Button from "../../components/Button";
 import Title from "../../components/Title";
@@ -18,11 +18,11 @@ import {
 import User from "../../models/User";
 
 const Login: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
 
     if (logged.name != null) {
-        history.push("/home");
+        navigate("/home");
     }
 
     const [email, setEmail] = useState<string>("");
@@ -40,7 +40,7 @@ const Login: React.FC = () => {
 
         users.forEach((user) => {
             if (user.email === email && user.password === password) {
-                history.push("/home");
+                navigate("/home");
                 localStorage.setItem("logged", JSON.stringify(user));
                 found = true;
 

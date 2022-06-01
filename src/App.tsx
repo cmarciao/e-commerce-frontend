@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -12,13 +12,13 @@ import "./styles/globalcss.css";
 const App: React.FC = () => {
     return (
         <BrowserRouter>
-            <Switch>
-                <Route path="/" component={PageInital} exact />
-                <Route path="/register" component={Register} />
-                <Route path="/login" component={Login} />
-                <Route path="/home" component={Home} />
-                <Route path="/my-cart" component={MyCarts} />
-            </Switch>
+            <Routes>
+                <Route path="/" element={<PageInital />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/my-cart" element={<MyCarts />} />
+            </Routes>
         </BrowserRouter>
     );
 };
