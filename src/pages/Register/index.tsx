@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import User from "../../models/User";
 
@@ -20,11 +20,11 @@ import {
 } from "./styles";
 
 const Register: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
 
     if (logged.name != null) {
-        history.push("/home");
+        navigate("/home");
     }
 
     const [name, setName] = useState<string>("");
@@ -66,7 +66,7 @@ const Register: React.FC = () => {
         localStorage.setItem("users", JSON.stringify(users));
 
         alert("Usuário cadastrado com sucesso!");
-        history.push("/login");
+        navigate("/login");
     }
 
     function validateDatas() {

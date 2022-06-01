@@ -1,17 +1,17 @@
 import React from "react";
 import Button from "../../components/Button";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Container, Content, LeftArea, RightArea } from "./styles";
 import Title from "../../components/Title";
 import User from "../../models/User";
 
 const PageInital: React.FC = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
 
     if (logged.name != null) {
-        history.push("/home");
+        navigate("/home");
     }
 
     return (
