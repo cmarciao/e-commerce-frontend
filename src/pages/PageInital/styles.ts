@@ -14,21 +14,24 @@ export const Container = styled.div`
 export const Content = styled.div`
     display: flex;
     align-items: center;
-    max-width: 1080px;
+    max-width: 1180px;
     width: 100%;
 `;
 
 export const LeftArea = styled.div`
     flex: 1;
-    padding: 0 2%;
 `;
 
 export const RightArea = styled.div`
-    flex: 1;
-    padding: 0 2%;
+    flex: 1.5;
 
     img {
-        width: 40rem;
-        min-width: 15rem;
+        width: 100%;
+
     }
+    
+    @media (max-width: 820px) {
+        display: none;;
+    }
+
 `;

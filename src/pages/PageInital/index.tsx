@@ -1,10 +1,13 @@
 import React from "react";
-import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Container, Content, LeftArea, RightArea } from "./styles";
-import Title from "../../components/Title";
 import User from "../../models/User";
+import Title from "../../components/Title";
+import Button from "../../components/Button";
+
+import InitialBanner from "../../assets/initial-banner.png"
+
+import { Container, Content, LeftArea, RightArea } from "./styles";
 
 const PageInital: React.FC = () => {
     const navigate = useNavigate();
@@ -36,7 +39,7 @@ const PageInital: React.FC = () => {
                 </LeftArea>
                 <RightArea>
                     <img
-                        src="https://www.allcontab.com.br/wp-content/uploads/2019/09/offices.png"
+                        src={InitialBanner}
                         alt=""
                     />
                 </RightArea>

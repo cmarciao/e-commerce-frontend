@@ -5,62 +5,28 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+    max-width: 1180px;
+    width: 100%;
+    
+    margin: 0 auto;
+    padding: 5rem 2% 2rem;
+`;
+
+export const ProductItemList = styled.div`
     display: flex;
     flex-wrap: wrap;
-    padding: 2%;
-
-    justify-content: space-around;
-    gap: 1rem;
-    padding: 80px 0;
-`;
-
-export const ItemProduct = styled.div`
-    border-radius: 10px;
-    padding: 5px;
-
-    background-color: white;
-
-    img {
-        width: 15rem;
-        border-radius: 10px;
-        background: white;
-        border: 4px solid black;
-    }
-
-    h3 {
-        font-size: 1.5rem;
-        font-family: "Times New Roman", Times, serif;
-        color: black;
-    }
-
-    p {
-        margin-top: 10px;
-        color: black;
-    }
-`;
-
-export const AreaInfoProduct = styled.div`
-    display: flex;
-    align-items: center;
+    
+    margin-top: 3rem;
+    
     justify-content: space-between;
+    
+    gap: 1rem;
 
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    & > div {
+        flex: 1 1 250px;
+    }
 
-    padding: 5px;
-`;
-
-export const LeftArea = styled.div`
-    flex: 2;
-`;
-
-export const RightArea = styled.div`
-    flex: 1;
-    text-align: center;
-
-    button {
-        background: black;
-        border-radius: 50%;
-        padding: 8px;
+    @media (max-width: 535px) {
+        justify-content: space-around;
     }
 `;

@@ -3,8 +3,6 @@ import styled from "styled-components";
 export const Container = styled.div`
     h1 {
         font-size: 3.5rem;
-        white-space: nowrap;
-        user-select: none;
     }
 
     p {
@@ -13,7 +11,6 @@ export const Container = styled.div`
         margin-top: 1rem;
         letter-spacing: 1px;
         line-height: 1.25rem;
-        user-select: none;
     }
 `;
 
@@ -22,5 +19,13 @@ export const AreaButton = styled.div`
     justify-content: center;
     gap: 2rem;
 
-    margin-top: 2rem;
+    margin-top: 4.5rem;
+
+    a {
+        width: 100%;
+    }
+
+    @media (max-width: 420px) {
+        flex-direction: column;
+    }
 `;

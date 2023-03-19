@@ -1,14 +1,14 @@
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 
 import { ButtonContainer } from "./styles";
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     title: string;
-    props?: () => void;
+    handleAction?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ title, props }) => {
-    return <ButtonContainer onClick={props}>{title}</ButtonContainer>;
+const Button: React.FC<ButtonProps> = ({ title, handleAction, ...props }) => {
+    return <ButtonContainer {...props} onClick={handleAction}>{title}</ButtonContainer>;
 };
 
 export default Button;
