@@ -6,76 +6,74 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    padding: 2%;
-
-    justify-content: space-around;
-    gap: 1rem;
-    padding: 80px 0;
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 3rem 2% 2rem;
 `;
 
-export const ItemProduct = styled.div`
-    border-radius: 10px;
-    padding: 5px;
-
-    background-color: white;
-
-    img {
-        width: 15rem;
-        border-radius: 10px;
-        background: white;
-        border: 4px solid black;
-    }
-
-    h3 {
-        font-size: 1.5rem;
-        font-family: "Times New Roman", Times, serif;
-        color: black;
-    }
-
-    p {
-        margin-top: 10px;
-        color: black;
-    }
-`;
-
-export const AreaInfoProduct = styled.div`
+export const Informations = styled.section `
     display: flex;
-    align-items: center;
     justify-content: space-between;
 
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 3rem;
 
-    padding: 5px;
-`;
-
-export const LeftArea = styled.div`
-    flex: 2;
-`;
-
-export const RightArea = styled.div`
-    flex: 1;
-    text-align: center;
-
-    button {
-        background: black;
-        border-radius: 50%;
-        padding: 8px;
+    gap: 1.5rem;
+    
+    @media (max-width: 863px) {
+        flex-direction: column-reverse;
     }
+`;
+
+export const ProductItemList = styled.div`
+    flex: 2.25;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        margin-top: 3rem;
+        gap: 1rem;
+    }  
+`;
+
+export const Summary = styled.section`
+    flex: 1;
+    min-width: 320px;
+    width: 100%;
+
+    h1 {
+        font-size: 1.5rem;
+    }
+`;
+
+export const SummaryContent = styled.div `
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    border-radius: 8px;
+    background-color: white;
+
+    padding: 8px;
+    margin-top: 3rem;
 
     p {
-        font-weight: bold;
-        color: black;
+        color: #1a1a1a;
     }
-`;
 
-export const AreaButtons = styled.div`
-    button {
-        width: 2rem;
-        font-weight: bold;
-        border-radius: 5px;
-        padding: 5px;
+    & > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+
+        span {
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+    }
+
+    & > button {
+        margin-top: 2rem;
     }
 `;

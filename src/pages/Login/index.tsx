@@ -64,7 +64,7 @@ const Login: React.FC = () => {
             <Content>
                 <LeftArea>
                     <Title
-                        title="Entre com seu email"
+                        title="Entre agora"
                         subtitle="Está na hora de você ver os melhores preços que o mercado pode oferecer sobre tecnologia em um só lugar, acesse agora a nossa plataforma usando seu email e senha de cadastro. Tenha um bom uso!"
                     >
                         <Link to="/">
@@ -73,31 +73,39 @@ const Login: React.FC = () => {
                     </Title>
                 </LeftArea>
                 <RightArea>
-                    <ItemInput>
-                        <HiOutlineMail size="2rem" />
-                        <input
-                            type="email"
-                            placeholder="Informe seu email"
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                            }}
-                        />
-                    </ItemInput>
+                    <form onSubmit={handleLogin}>
+                        <div>
+                            <ItemInput>
+                                <HiOutlineMail size="2rem" />
+                                <input
+                                    type="email"
+                                    placeholder="Informe seu email"
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                    }}
+                                />
+                            </ItemInput>
 
-                    <ItemInput>
-                        <AiOutlineLock size="2rem" />
-                        <input
-                            type="password"
-                            placeholder="Informe sua senha"
-                            onChange={(e) => {
-                                setPassword(e.target.value);
-                            }}
-                        />
-                    </ItemInput>
+                            <ItemInput>
+                                <AiOutlineLock size="2rem" />
+                                <input
+                                    type="password"
+                                    placeholder="Informe sua senha"
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                    }}
+                                />
+                            </ItemInput>
+                        </div>
 
-                    <AreaButton>
-                        <Button title="Entrar" props={handleLogin} />
-                    </AreaButton>
+                        <AreaButton>
+                            <Button title="Entrar" type="submit" />
+                        </AreaButton>
+                    </form>
+
+                    <Link to="/">
+                        <Button title="Voltar" />
+                    </Link>
                 </RightArea>
             </Content>
         </Container>

@@ -13,18 +13,48 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     width: 100%;
-    max-width: 1080px;
-    display: flex;
-    align-items: center;
+    max-width: 1180px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 3rem;
+
+    @media (max-width: 720px) {
+        max-width: 520px;
+        width: 100%;
+        
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const LeftArea = styled.div`
-    flex: 1;
     padding: 0 2%;
+
+    @media (max-width: 720px) {
+        button {
+            display: none;
+        }
+    }
 `;
 
 export const RightArea = styled.div`
-    flex: 1;
+    form {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    a {
+        display: block;
+        margin-top: 1.5rem;
+
+        @media (min-width: 720px) {
+            display: none;
+        }
+    }
 `;
 
 export const ItemInput = styled.div`
@@ -34,15 +64,23 @@ export const ItemInput = styled.div`
     gap: 5px;
 
     input {
-        width: 70%;
+        width: 100%;
         padding: 15px;
         border-radius: 10px;
-        margin: 5px 0;
         color: black;
+
+    }
+    
+    & + & {
+        margin-top: 1rem;
     }
 `;
 
 export const AreaButton = styled.div`
     text-align: center;
-    margin-top: 5px;
+    margin-top: 2rem;
+
+    @media (max-width: 720px) {
+        margin-top: 5rem;
+    }
 `;

@@ -90,45 +90,52 @@ const Register: React.FC = () => {
                         </Link>
                     </Title>
                 </LeftArea>
+                
                 <RightArea>
-                    <form>
-                        <ItemInput>
-                            <FiUser size="2rem" />
-                            <input
-                                type="text"
-                                placeholder="Informe seu nome"
-                                onChange={(e) => {
-                                    setName(e.target.value);
-                                }}
-                            />
-                        </ItemInput>
+                    <form onSubmit={handleRegister}>
+                        <div>
+                            <ItemInput>
+                                <FiUser size="2rem" />
+                                <input
+                                    type="text"
+                                    placeholder="Informe seu nome"
+                                    onChange={(e) => {
+                                        setName(e.target.value);
+                                    }}
+                                />
+                            </ItemInput>
 
-                        <ItemInput>
-                            <HiOutlineMail size="2rem" />
-                            <input
-                                type="email"
-                                placeholder="Informe seu email"
-                                onChange={(e) => {
-                                    setEmail(e.target.value);
-                                }}
-                            />
-                        </ItemInput>
+                            <ItemInput>
+                                <HiOutlineMail size="2rem" />
+                                <input
+                                    type="email"
+                                    placeholder="Informe seu email"
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                    }}
+                                    />
+                            </ItemInput>
 
-                        <ItemInput>
-                            <AiOutlineLock size="2rem" />
-                            <input
-                                type="password"
-                                placeholder="Informe sua senha"
-                                onChange={(e) => {
-                                    setPassword(e.target.value);
-                                }}
-                            />
-                        </ItemInput>
+                            <ItemInput>
+                                <AiOutlineLock size="2rem" />
+                                <input
+                                    type="password"
+                                    placeholder="Informe sua senha"
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                    }}
+                                    />
+                            </ItemInput>
+                        </div>
 
                         <AreaButton>
-                            <Button title="Cadastrar" props={handleRegister} />
+                            <Button title="Cadastrar" type="submit" />
                         </AreaButton>
                     </form>
+
+                    <Link to="/">
+                        <Button title="Voltar" />
+                    </Link>
                 </RightArea>
             </Content>
         </Container>

@@ -4,20 +4,17 @@ import api from "../../services/api";
 
 import Header from "../../components/Header";
 
-import { FaCartPlus } from "react-icons/fa";
-
 import {
-    AreaInfoProduct,
     Container,
     Content,
-    ItemProduct,
-    LeftArea,
-    RightArea,
+    ProductItemList,
 } from "./styles";
 
 import Product from "../../models/Product";
 import Cart from "../../models/Cart";
 import User from "../../models/User";
+import { ProductItem } from "../../components/ProductItem";
+
 
 const Home: React.FC = () => {
     const [user, setUser] = useState<User>();
@@ -35,7 +32,7 @@ const Home: React.FC = () => {
         setData(data);
     }
 
-    function handleProduct(product: Product) {
+    function handleProduct(product: Product, count: number) {
         let exist: boolean = false;
         let indexCart: number;
 
@@ -55,11 +52,8 @@ const Home: React.FC = () => {
             if (item.id === product.id) {
                 let myAmount: number = item.amount || 0;
                 let myProduct: Product = {
-                    id: product.id,
-                    name: product.name,
+                    ...product,
                     amount: myAmount + 1,
-                    price: product.price,
-                    urlPhoto: product.urlPhoto,
                 };
 
                 exist = true;
@@ -70,11 +64,8 @@ const Home: React.FC = () => {
 
         if (!exist) {
             let myProduct: Product = {
-                id: product.id,
-                name: product.name,
+                ...product,
                 amount: 1,
-                price: product.price,
-                urlPhoto: product.urlPhoto,
             };
 
             if (myCart.idUser === undefined) {
@@ -97,35 +88,24 @@ const Home: React.FC = () => {
             }
         }
 
-        console.log(allCarts);
         localStorage.setItem("carts", JSON.stringify(allCarts));
     }
+    
 
     return (
         <Container>
             <Header page="home" />
             <Content>
-                {data.map((product) => (
-                    <ItemProduct key={product.id}>
-                        <img src={product.urlPhoto} alt="Product" />
-                        <AreaInfoProduct>
-                            <LeftArea>
-                                <h3>{product.name}</h3>
-                                <p>
-                                    R${" "}
-                                    {product.price
-                                        ?.toFixed(2)
-                                        .replace(".", ",")}
-                                </p>
-                            </LeftArea>
-                            <RightArea>
-                                <button onClick={() => handleProduct(product)}>
-                                    <FaCartPlus size="1.5rem" />
-                                </button>
-                            </RightArea>
-                        </AreaInfoProduct>
-                    </ItemProduct>
-                ))}
+                <h1>Seja muito bem vindo</h1>
+                <ProductItemList>
+                    {data.map((product) => (
+                        <ProductItem
+                            key={product.id}
+                            product={product}
+                            handleProduct={handleProduct}
+                        />
+                    ))}
+                </ProductItemList>
             </Content>
         </Container>
     );
