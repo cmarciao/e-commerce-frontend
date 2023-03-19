@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 import Title from "../../components/Title";
@@ -30,33 +31,48 @@ const Login: React.FC = () => {
 
     let found = false;
 
-    function handleLogin() {
-        if (validateDatas()) {
-            alert("Preencha todos os campos!");
+    function formValidate(): Boolean {
+        return !(!email && !password);
+    }
+
+    function handleLogin(e: FormEvent) {
+        e.preventDefault();
+
+        if (!formValidate()) {
+            toast.info("Preencha todos os campos!");
             return;
         }
 
-        let users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+        toast.promise<string, string, string>(new Promise((resolve, reject) => {
+            setTimeout(() => {
+                let users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
 
-        users.forEach((user) => {
-            if (user.email === email && user.password === password) {
-                navigate("/home");
-                localStorage.setItem("logged", JSON.stringify(user));
-                found = true;
-
-                return;
+                users.forEach((user) => {
+                    if (user.email === email && user.password === password) {
+                        localStorage.setItem("logged", JSON.stringify(user));
+                        found = true;
+                        
+                        resolve("Seja bem vindo");
+                    }
+                });
+                
+                if (!found) reject("Usuário não encontrado!");
+            }, 1000 * 2);
+        }), {
+            pending: "Espere um momento",
+            success: {
+                render({ data }) {
+                    navigate("/home");
+                    
+                    return data;
+                }
+            },
+            error: {
+                render(err) {
+                    return err.data;
+                }
             }
         });
-
-        if (!found) alert("Usuário não encontrado!");
-    }
-
-    function validateDatas() {
-        if (email != null && password != null) {
-            return false;
-        }
-
-        return true;
     }
 
     return (

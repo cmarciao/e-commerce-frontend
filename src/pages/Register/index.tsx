@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import User from "../../models/User";
 
@@ -20,61 +21,77 @@ import {
 } from "./styles";
 
 const Register: React.FC = () => {
-    const navigate = useNavigate();
-    const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
-
-    if (logged.name != null) {
-        navigate("/home");
-    }
-
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    
+    const navigate = useNavigate();
 
-    function handleRegister() {
-        if (validateDatas()) {
-            alert("Preencha todos os campos!");
-            return;
+    useEffect(() => {
+        const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
+
+        if (logged.name != null) {
+            navigate("/home");
         }
+    }, [navigate]);
 
-        let users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
-        let validate: boolean = false;
-
-        let myId: number = 0;
-        users.forEach((item) => {
-            if (item.email === email) {
-                validate = true;
-                return;
-            }
-            myId++;
-        });
-
-        if (validate) {
-            alert("Usuário já cadastrado!");
-            return;
-        }
-
-        const user: User = {
-            id: myId,
-            name: name,
-            email: email,
-            password: password,
-        };
-
-        users.push(user);
-
-        localStorage.setItem("users", JSON.stringify(users));
-
-        alert("Usuário cadastrado com sucesso!");
-        navigate("/login");
+    function formValidate(): Boolean {
+        return !(!name && !email && !password);
     }
 
-    function validateDatas() {
-        if (name != null && email != null && password != null) {
-            return false;
+    function handleRegister(e: FormEvent) {
+        e.preventDefault();
+
+        if (!formValidate()) {
+            toast.info("Preencha todos os campos!");
+            return;
         }
 
-        return true;
+        toast.promise<string, string, string>(new Promise((resolve, reject) => {
+            setTimeout(() => {
+                let users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+                let validate: boolean = false;
+
+                let myId: number = 0;
+                users.forEach((item) => {
+                    if (item.email === email) {
+                        validate = true;
+                        return;
+                    }
+                    myId++;
+                });
+
+                if (validate) {
+                    reject("Usuário já cadastrado!");
+                }
+
+                const user: User = {
+                    id: myId,
+                    name: name,
+                    email: email,
+                    password: password,
+                };
+
+                users.push(user);
+
+                localStorage.setItem("users", JSON.stringify(users));
+
+                resolve("Usuário cadastrado com sucesso!");
+            }, 1000 * 2);
+        }), {
+            pending: "Cadastrando usuário",
+            success: {
+                render({ data }) {
+                    navigate("/login");
+                    return data;
+                }
+            },
+            error: {
+                render(err){
+                    return err.data
+                }
+            },
+            })
     }
 
     return (
