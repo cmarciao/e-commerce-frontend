@@ -13,20 +13,25 @@ export const Content = styled.div`
 `;
 
 export const ProductItemList = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas: 
+    "div div div div";
     
     margin-top: 3rem;
-    
-    justify-content: space-between;
-    
     gap: 1rem;
 
-    & > div {
-        flex: 1 1 250px;
+    @media(max-width: 995px) {
+        grid-template-areas: "div div div";
+        justify-content: space-around;
     }
 
-    @media (max-width: 535px) {
+    @media(max-width: 662px) {
+        grid-template-areas: "div div";
         justify-content: space-around;
+    }
+
+    @media(max-width: 414px) {
+        grid-template-areas: "div";
+        justify-content: center;
     }
 `;
