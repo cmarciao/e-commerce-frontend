@@ -29,6 +29,7 @@ export const Content = styled.div`
 `;
 
 export const LeftArea = styled.div`
+    display: flex;
     padding: 0 2%;
 
     @media (max-width: 720px) {
@@ -53,25 +54,6 @@ export const RightArea = styled.div`
         @media (min-width: 720px) {
             display: none;
         }
-    }
-`;
-
-export const ItemInput = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    input {
-        width: 100%;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 5px 0;
-        color: black;
-    }
-
-    & + & {
-        margin-top: 1rem;
     }
 `;
 

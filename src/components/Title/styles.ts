@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    h1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    div > h1 {
         font-size: 3.5rem;
     }
 
-    p {
+    div > p {
         font-size: 0.875rem;
 
         margin-top: 1rem;

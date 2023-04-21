@@ -17,9 +17,11 @@ const Title: React.FC<TitleProps> = ({
 }: TitleProps) => {
     return (
         <Container>
-            <h1>{title}</h1>
-            <h1>{othertitle}</h1>
-            <p>{subtitle}</p>
+            <div>
+                <h1>{title}</h1>
+                <h1>{othertitle}</h1>
+                <p>{subtitle}</p>
+            </div>
 
             <AreaButton>{children}</AreaButton>
         </Container>

@@ -30,6 +30,7 @@ export const Content = styled.div`
 `;
 
 export const LeftArea = styled.div`
+    display: flex;
     padding: 0 2%;
 
     @media (max-width: 720px) {

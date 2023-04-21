@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ButtonContainer = styled.button`
     width: 100%;
     padding: 0.875rem 2rem;
-    border-radius: 8px;
+    border-radius: 6px;
 
     color: white;
     font-weight: bold;
@@ -14,5 +14,4 @@ export const ButtonContainer = styled.button`
         rgba(180, 39, 184, 1) 5%,
         rgba(232, 154, 35, 1) 100%
     );
-   
 `;

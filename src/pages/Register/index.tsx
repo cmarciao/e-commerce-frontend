@@ -3,9 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import User from "../../models/User";
+import { useErrors } from "../../hooks/useErrors";
+import isEmailValid from "../../utils/isEmailValid";
 
-import Button from "../../components/Button";
 import Title from "../../components/Title";
+import Button from "../../components/Button";
+import { Input } from "../../components/Input";
 
 import { FiUser } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
@@ -16,17 +19,17 @@ import {
     Content,
     LeftArea,
     RightArea,
-    ItemInput,
     AreaButton,
 } from "./styles";
 
 const Register: React.FC = () => {
+    const navigate = useNavigate();
+    const { setError, getErrorByFieldName, removeError } = useErrors();
+
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     
-    const navigate = useNavigate();
-
     useEffect(() => {
         const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
 
@@ -35,17 +38,55 @@ const Register: React.FC = () => {
         }
     }, [navigate]);
 
+    function checkIfIsNameValid(name: string) {
+        if(!name) {
+            setError({ field: "name", message: "Informe o seu nome."});
+            return false;
+        }
+
+        return true;
+    }
+
+    function checkIfIsEmailValid(email: string): boolean {
+        if(!email) {
+            setError({ field: "email", message: "Informe o seu email."});
+            return false;
+        }
+
+        if(!isEmailValid(email)) {
+            setError({ field: "email", message: "O email não é válido."});
+            return false;
+        }
+
+        removeError("email");
+
+        return true;
+    }
+
+    function checkIfIsPasswordValid(password: string) {
+        if(password.length < 8) {
+            setError({ field: "password", message: "A senha deve ter mais de 8 caracteres."});
+            return false;
+        }
+
+        removeError("password");
+
+        return true;
+    }
+
     function formValidate(): Boolean {
-        return !(!name && !email && !password);
+        const isNameValid = checkIfIsNameValid(name);
+        const isEmailValid = checkIfIsEmailValid(email); 
+        const isPasswordValid = checkIfIsPasswordValid(password);
+        
+        return  isNameValid &&  isEmailValid && isPasswordValid; 
     }
 
     function handleRegister(e: FormEvent) {
         e.preventDefault();
 
-        if (!formValidate()) {
-            toast.info("Preencha todos os campos!");
-            return;
-        }
+        if (!formValidate()) return;
+        
 
         toast.promise<string, string, string>(new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -109,40 +150,37 @@ const Register: React.FC = () => {
                 </LeftArea>
                 
                 <RightArea>
-                    <form onSubmit={handleRegister}>
+                    <form noValidate onSubmit={handleRegister}>
                         <div>
-                            <ItemInput>
-                                <FiUser size="2rem" />
-                                <input
-                                    type="text"
-                                    placeholder="Informe seu nome"
-                                    onChange={(e) => {
-                                        setName(e.target.value);
-                                    }}
-                                />
-                            </ItemInput>
+                            <Input
+                                Icon={FiUser}
+                                type="text"
+                                error={getErrorByFieldName("name")}
+                                placeholder="Informe seu nome"
+                                onChange={(e) => {
+                                    setName(e.target.value);
+                                }}
+                            />
 
-                            <ItemInput>
-                                <HiOutlineMail size="2rem" />
-                                <input
-                                    type="email"
-                                    placeholder="Informe seu email"
-                                    onChange={(e) => {
-                                        setEmail(e.target.value);
-                                    }}
-                                    />
-                            </ItemInput>
+                            <Input
+                                Icon={HiOutlineMail}
+                                type="email"
+                                error={getErrorByFieldName("email")}
+                                placeholder="Informe seu email"
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
+                            />
 
-                            <ItemInput>
-                                <AiOutlineLock size="2rem" />
-                                <input
-                                    type="password"
-                                    placeholder="Informe sua senha"
-                                    onChange={(e) => {
-                                        setPassword(e.target.value);
-                                    }}
-                                    />
-                            </ItemInput>
+                            <Input
+                                Icon={AiOutlineLock}
+                                type="password"
+                                error={getErrorByFieldName("password")}
+                                placeholder="Informe sua senha"
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                            />
                         </div>
 
                         <AreaButton>
@@ -157,6 +195,6 @@ const Register: React.FC = () => {
             </Content>
         </Container>
     );
-};
+}
 
 export default Register;

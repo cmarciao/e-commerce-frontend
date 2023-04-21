@@ -2,8 +2,9 @@ import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import Button from "../../components/Button";
 import Title from "../../components/Title";
+import Button from "../../components/Button";
+import { Input } from "../../components/Input";
 
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
@@ -13,51 +14,65 @@ import {
     Content,
     LeftArea,
     RightArea,
-    ItemInput,
     AreaButton,
 } from "./styles";
 import User from "../../models/User";
+import { useErrors } from "../../hooks/useErrors";
+import isEmailValid from "../../utils/isEmailValid";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
+    const { setError, getErrorByFieldName, removeError } = useErrors();
+    
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
     const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
 
     if (logged.name != null) {
         navigate("/home");
     }
 
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    function checkIfIsEmailValid(email: string): boolean {
+        if(!email) {
+            setError({ field: "email", message: "Informe o seu email."});
+            return false;
+        }
 
-    let found = false;
+        if(!isEmailValid(email)) {
+            setError({ field: "email", message: "O email não é válido."});
+            return false;
+        }
+
+        removeError("email");
+
+        return true;
+    }
+
+    function checkIfIsPasswordValid(password: string) {
+        if(password.length < 8) {
+            setError({ field: "password", message: "A senha deve ter mais de 8 caracteres."});
+            return false;
+        }
+
+        removeError("password");
+
+        return true;
+    }
 
     function formValidate(): Boolean {
-        return !(!email && !password);
+        const isEmailValid = checkIfIsEmailValid(email); 
+        const isPasswordValid = checkIfIsPasswordValid(password);
+        
+        return  isEmailValid && isPasswordValid; 
     }
 
     function handleLogin(e: FormEvent) {
         e.preventDefault();
 
-        if (!formValidate()) {
-            toast.info("Preencha todos os campos!");
-            return;
-        }
+        if (!formValidate()) return;
 
         toast.promise<string, string, string>(new Promise((resolve, reject) => {
-            setTimeout(() => {
-                let users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
-
-                users.forEach((user) => {
-                    if (user.email === email && user.password === password) {
-                        localStorage.setItem("logged", JSON.stringify(user));
-                        found = true;
-                        
-                        resolve("Seja bem vindo");
-                    }
-                });
-                
-                if (!found) reject("Usuário não encontrado!");
-            }, 1000 * 2);
         }), {
             pending: "Espere um momento",
             success: {
@@ -89,29 +104,27 @@ const Login: React.FC = () => {
                     </Title>
                 </LeftArea>
                 <RightArea>
-                    <form onSubmit={handleLogin}>
+                    <form noValidate onSubmit={handleLogin}>
                         <div>
-                            <ItemInput>
-                                <HiOutlineMail size="2rem" />
-                                <input
-                                    type="email"
-                                    placeholder="Informe seu email"
-                                    onChange={(e) => {
-                                        setEmail(e.target.value);
-                                    }}
-                                />
-                            </ItemInput>
+                            <Input
+                                Icon={HiOutlineMail}
+                                type="email"
+                                error={getErrorByFieldName("email")}
+                                placeholder="Informe seu email"
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                }}
+                            />
 
-                            <ItemInput>
-                                <AiOutlineLock size="2rem" />
-                                <input
-                                    type="password"
-                                    placeholder="Informe sua senha"
-                                    onChange={(e) => {
-                                        setPassword(e.target.value);
-                                    }}
-                                />
-                            </ItemInput>
+                            <Input
+                                Icon={AiOutlineLock}
+                                type="password"
+                                error={getErrorByFieldName("password")}
+                                placeholder="Informe sua senha"
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                            />
                         </div>
 
                         <AreaButton>
