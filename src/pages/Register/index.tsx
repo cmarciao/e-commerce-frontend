@@ -21,6 +21,7 @@ import {
     RightArea,
     AreaButton,
 } from "./styles";
+import api from "../../services/api";
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
@@ -43,6 +44,8 @@ const Register: React.FC = () => {
             setError({ field: "name", message: "Informe o seu nome."});
             return false;
         }
+
+        removeError('name');
 
         return true;
     }
@@ -75,11 +78,9 @@ const Register: React.FC = () => {
     }
 
     function formValidate(): Boolean {
-        const isNameValid = checkIfIsNameValid(name);
-        const isEmailValid = checkIfIsEmailValid(email); 
-        const isPasswordValid = checkIfIsPasswordValid(password);
-        
-        return  isNameValid &&  isEmailValid && isPasswordValid; 
+        return checkIfIsNameValid(name)
+            && checkIfIsEmailValid(email) 
+            && checkIfIsPasswordValid(password);
     }
 
     function handleRegister(e: FormEvent) {
@@ -87,52 +88,18 @@ const Register: React.FC = () => {
 
         if (!formValidate()) return;
         
-
-        toast.promise<string, string, string>(new Promise((resolve, reject) => {
-            setTimeout(() => {
-                let users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
-                let validate: boolean = false;
-
-                let myId: number = 0;
-                users.forEach((item) => {
-                    if (item.email === email) {
-                        validate = true;
-                        return;
-                    }
-                    myId++;
-                });
-
-                if (validate) {
-                    reject("Usuário já cadastrado!");
-                }
-
-                const user: User = {
-                    id: myId,
-                    name: name,
-                    email: email,
-                    password: password,
-                };
-
-                users.push(user);
-
-                localStorage.setItem("users", JSON.stringify(users));
-
-                resolve("Usuário cadastrado com sucesso!");
-            }, 1000 * 2);
+        toast.promise(api.post('/users', {
+            name, email, password
         }), {
-            pending: "Cadastrando usuário",
             success: {
-                render({ data }) {
+                render() {   
                     navigate("/login");
-                    return data;
+                    return "Usuário cadastrado!";
                 }
             },
-            error: {
-                render(err){
-                    return err.data
-                }
-            },
-            })
+            pending: 'Cadastrando usuário...',
+            error: 'Erro ao cadastrar usuário'
+        });
     }
 
     return (

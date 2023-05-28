@@ -19,6 +19,7 @@ import {
 import User from "../../models/User";
 import { useErrors } from "../../hooks/useErrors";
 import isEmailValid from "../../utils/isEmailValid";
+import api from "../../services/api";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -72,21 +73,18 @@ const Login: React.FC = () => {
 
         if (!formValidate()) return;
 
-        toast.promise<string, string, string>(new Promise((resolve, reject) => {
+        toast.promise(api.post('/', {
+            email, password
         }), {
-            pending: "Espere um momento",
             success: {
-                render({ data }) {
+                render({ data }) {   
                     navigate("/home");
-                    
-                    return data;
+                    localStorage.setItem('token', `${data?.data}`);
+                    return "Seja bem vindo!";
                 }
             },
-            error: {
-                render(err) {
-                    return err.data;
-                }
-            }
+            pending: 'Validando usuário...',
+            error: 'Email ou senha incorretos!'
         });
     }
 
