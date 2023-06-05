@@ -1,10 +1,9 @@
 type Product = {
     id: number;
     name: string;
-    urlPhoto: string;
+    url_photo: string;
     price: number;
-    stockQuantity: number;
-    amount: number;
+    stock_quantity: number;
 };
 
 export default Product;
