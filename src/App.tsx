@@ -19,7 +19,7 @@ const App: React.FC = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/my-cart" element={<MyCarts />} />
+                <Route path="/my-carts" element={<MyCarts />} />
             </Routes>
 
             <ToastContainer
