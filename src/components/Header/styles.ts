@@ -67,7 +67,16 @@ export const ItemInput = styled.div`
 export const AreaIcons = styled.div`
     display: flex;
     align-items: center;
+
     gap: 2rem;
+    
+    a {
+        text-align: center;
+        
+        strong, img {
+            display: block;
+        }
+    }
 
     button {
         background: none;
