@@ -38,7 +38,7 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduc
     return (
         <Container key={product.id}>
             <Content>
-                <img src={product.urlPhoto} alt="Product" />
+                <img src={product.url_photo} alt="Product" />
                 <AreaInfoProduct>
                     <LeftArea>
                         <h1>{product.name}</h1>
@@ -51,7 +51,7 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduc
 
                         <span>{count}</span>
                         
-                        <ActionButton onClick={handleIncremmentProduct} disabled={count === product.stockQuantity}>
+                        <ActionButton onClick={handleIncremmentProduct} disabled={count === product.stock_quantity}>
                             <MdOutlineAdd size="1.25rem" />
                         </ActionButton>
                     </RightArea>

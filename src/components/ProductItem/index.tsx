@@ -30,7 +30,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, handleProduct }: Pro
 
     return (
         <ItemProduct key={product.id}>
-            <img src={product.urlPhoto} alt="Product" />
+            <img src={product.url_photo} alt="Product" />
             <AreaInfoProduct>
                 <LeftArea>
                     <h1>{product.name}</h1>
@@ -50,7 +50,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, handleProduct }: Pro
                             <HiMinusSm size="1.25rem" />
                         </ActionButton>
 
-                        <ActionButton onClick={handleIncremmentProduct} disabled={count === product.stockQuantity}>
+                        <ActionButton onClick={handleIncremmentProduct} disabled={count === product.stock_quantity}>
                             <MdOutlineAdd size="1.25rem" />
                         </ActionButton>
                     </div>
