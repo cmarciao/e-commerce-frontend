@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import api from "../../services/api";
+import Product from "../../models/Product";
 
 import Header from "../../components/Header";
+import { ProductItem } from "../../components/ProductItem";
 
 import {
     Container,
@@ -10,95 +12,31 @@ import {
     ProductItemList,
 } from "./styles";
 
-import Product from "../../models/Product";
-import Cart from "../../models/Cart";
-import User from "../../models/User";
-import { ProductItem } from "../../components/ProductItem";
-
-
 const Home: React.FC = () => {
-    const [user, setUser] = useState<User>();
-    const [data, setData] = useState<Product[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
-    useEffect(() => {
-        handelApi();
-        setUser(JSON.parse(localStorage.getItem("logged") || "{}"));
+    const loadProducts = useCallback(async () => {
+        const response = await api.get('/products');
+        const products = response.data;
+
+        setProducts(products);
     }, []);
 
-    async function handelApi() {
-        let response = await api.get("");
-        let data = response.data;
+    useEffect(() => {
+        loadProducts();
+    }, [loadProducts]);
 
-        setData(data);
+    function handleProduct() {
+        // Not implemeted
     }
-
-    function handleProduct(product: Product, count: number) {
-        let exist: boolean = false;
-        let indexCart: number;
-
-        const allCarts: Cart[] = JSON.parse(
-            localStorage.getItem("carts") || "[]"
-        );
-
-        let myCart: Cart = {};
-        allCarts.forEach((item, index) => {
-            if (item.idUser === user?.id) {
-                myCart = item;
-                indexCart = index;
-            }
-        });
-
-        myCart.products?.forEach((item, index) => {
-            if (item.id === product.id) {
-                let myAmount: number = item.amount || 0;
-                let myProduct: Product = {
-                    ...product,
-                    amount: myAmount + 1,
-                };
-
-                exist = true;
-                myCart.products?.splice(index, 1, myProduct);
-                allCarts.splice(indexCart, 1, myCart);
-            }
-        });
-
-        if (!exist) {
-            let myProduct: Product = {
-                ...product,
-                amount: 1,
-            };
-
-            if (myCart.idUser === undefined) {
-                console.log("aa");
-                myCart = {
-                    idUser: user?.id,
-                    products: [myProduct],
-                };
-
-                allCarts.push(myCart);
-            } else {
-                let a = 0;
-                allCarts.forEach((item, index) => {
-                    if (item.idUser === user?.id) {
-                        a = index;
-                    }
-                });
-                myCart.products?.push(myProduct);
-                allCarts.splice(a, 1, myCart);
-            }
-        }
-
-        localStorage.setItem("carts", JSON.stringify(allCarts));
-    }
-    
 
     return (
         <Container>
-            <Header page="home" />
+            <Header page="home" name="Mocked Name" />
             <Content>
                 <h1>Seja muito bem vindo</h1>
                 <ProductItemList>
-                    {data.map((product) => (
+                    {products.map((product) => (
                         <ProductItem
                             key={product.id}
                             product={product}

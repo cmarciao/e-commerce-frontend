@@ -15,7 +15,7 @@ const MyCarts: React.FC = () => {
     const [data, setData] = useState<Product[]>([]);
 
     const productPrice = data.reduce((acc, item) => {
-        acc += item.price * item.amount
+        acc += item.price * 0
         return acc
     }, 0);
 
@@ -44,7 +44,7 @@ const MyCarts: React.FC = () => {
 
     return (
         <Container>
-            <Header page="my-carts" />
+            <Header page="my-carts" name="Mocked Name"/>
             <Content>
 
                 <Informations>
