@@ -1,57 +1,47 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
 
+import api from "../../services/api";
 import Cart from "../../models/Cart";
-import User from "../../models/User";
-import Product from "../../models/Product";
 
-import { ProductCartItem } from "../../components/ProductCartItem";
-import { Container, Content, Informations, ProductItemList, Summary, SummaryContent } from "./styles";
+import Header from "../../components/Header";
 import Button from "../../components/Button";
+import { ProductCartItem } from "../../components/ProductCartItem";
+
+import {
+    Container,
+    Content,
+    Informations,
+    ProductItemList,
+    Summary,
+    SummaryContent
+} from "./styles";
 
 const MyCarts: React.FC = () => {
-    let allCarts: Cart[] = [];
-    const [user, setUser] = useState<User>();
-    const [data, setData] = useState<Product[]>([]);
-
-    const productPrice = data.reduce((acc, item) => {
-        acc += item.price * 0
-        return acc
-    }, 0);
-
-    const formatedProductPrice = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(productPrice);
-
-    const formatedTotalPrice = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(1938);
+    const [carts, setCarts] = useState<Cart>({} as Cart);
 
     useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem("logged") || "{}"));
-    }, []);
+        async function loadCart() {
+            const response = await api.get('/carts', {
+                headers: {
+                    'x-user-id': 'c76ac4b3-afb0-4b1b-ad92-4bf98884c745'
+                }
+            });
 
-    if (data.length === 0) {
-        allCarts = JSON.parse(localStorage.getItem("carts") || "[]");
-        allCarts.forEach((item) => {
-            if (item.idUser === user?.id) {
-                setData(item.products || []);
-            }
-        });
-    }
+            setCarts(response.data);
+        }
+
+        loadCart();
+    }, []);
 
     return (
         <Container>
             <Header page="my-carts" name="Mocked Name"/>
             <Content>
-
                 <Informations>
                     <ProductItemList>
                         <h1>Sua lista de pedidos</h1>
                         <div>
-                            {data.map((product) => (
+                            {carts.products?.map((product) => (
                                 <ProductCartItem
                                 key={product.id}
                                 product={product}
@@ -65,10 +55,15 @@ const MyCarts: React.FC = () => {
                         <h1>Resumo das compras</h1>
 
                         <SummaryContent>
-                            <p>Você tem {data.length} ite{data.length === 1 ? "m" : "ns"}</p>
+                            <p>Você tem {carts.products?.length} {carts.products?.length === 1 ? 'item' : 'itens'}</p>
                             <div>
                                 <span>Preço total</span>
-                                <span>{formatedProductPrice}</span>
+                                <span>
+                                    {new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL'
+                                    }).format(carts.total)}
+                                </span>
                             </div>
                             <div>
                                 <span>Frete</span>
@@ -79,11 +74,15 @@ const MyCarts: React.FC = () => {
 
                             <div>
                                 <span>Preço total</span>
-                                <span>{formatedTotalPrice}</span>
+                                <span>
+                                    {new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL'
+                                    }).format(carts.total)}
+                                </span>
                             </div>
 
                             <Button title="Confirmar compra" />
-
                         </SummaryContent>
                     </Summary>
                 </Informations>

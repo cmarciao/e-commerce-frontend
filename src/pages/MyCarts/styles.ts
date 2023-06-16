@@ -9,7 +9,7 @@ export const Content = styled.div`
     max-width: 1180px;
     width: 100%;
     margin: 0 auto;
-    padding: 3rem 2% 2rem;
+    padding: 3rem 1rem 2rem;
 `;
 
 export const Informations = styled.section `
@@ -34,6 +34,10 @@ export const ProductItemList = styled.div`
         margin-top: 3rem;
         gap: 1rem;
     }  
+
+    & >  h1 {
+        font-size: 2rem;
+    }
 `;
 
 export const Summary = styled.section`
@@ -41,8 +45,12 @@ export const Summary = styled.section`
     min-width: 320px;
     width: 100%;
 
-    h1 {
-        font-size: 1.5rem;
+    & >  h1 {
+        font-size: 2rem;
+    }
+
+    @media(max-width: 430px) {
+        min-width: inherit;
     }
 `;
 
@@ -54,7 +62,7 @@ export const SummaryContent = styled.div `
     border-radius: 8px;
     background-color: white;
 
-    padding: 8px;
+    padding: 1rem;
     margin-top: 3rem;
 
     p {
@@ -75,5 +83,9 @@ export const SummaryContent = styled.div `
 
     & > button {
         margin-top: 2rem;
+    }
+
+    hr + div > span {
+        font-size: 1.25rem;
     }
 `;

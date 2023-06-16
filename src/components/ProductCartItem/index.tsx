@@ -14,6 +14,7 @@ import {
     ActionButton,
     RightArea
 } from "./styles";
+import api from "../../services/api";
 
 interface ProductCartItemProps {
     product: Product;
@@ -21,18 +22,19 @@ interface ProductCartItemProps {
 }
 
 const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduct }: ProductCartItemProps) => {
-    const [count, setCount] = useState<number>(1)
+    const [count, setCount] = useState(product.amount)
 
     function handleIncremmentProduct() {
-        setCount(preState => preState + 1);
+        setCount(preState => Number(preState) + 1);
     }
 
     function handleDecremmentProduct() {
-        setCount(preState => 
-            preState === 1
-            ? preState
-            : preState - 1
-        );
+        if(count === 1) return 
+        setCount(preState => preState - 1);
+    }
+
+    async function handleDeleteCartItem() {
+        await api.delete(`/carts/${product.id}`);
     }
 
     return (
@@ -63,7 +65,7 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduc
                         }).format(product.price)}
                     </span>
 
-                    <button>
+                    <button onClick={handleDeleteCartItem}>
                         <AiOutlineClose />
                     </button>
                 </AreaInfoProduct>

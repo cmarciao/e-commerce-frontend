@@ -22,6 +22,11 @@ export const Content = styled.div`
         border-radius: 8px;
         background: white;
         border: 3px solid black;
+
+        @media(max-width: 300px) {
+            width: 80px;
+            height: 125px;
+        }
     }
 `;
 
@@ -36,7 +41,7 @@ export const AreaInfoProduct = styled.div`
 
     & > span {
         display: inline-block;
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         color: black;
     }
 
@@ -83,7 +88,7 @@ export const RightArea = styled.div`
         border: 1px solid #1a1a1a;
         border-radius: 4px;
 
-        padding: 2px 1rem;
+        padding: 4px 2rem;
     }
 `;
 
@@ -94,7 +99,7 @@ export const ActionButton = styled.button`
     background-color: #1a1a1a;
     border-radius: 4px;
 
-    padding: 2px;
+    padding: 4px;
 
     & + button {
         margin-left: .5rem;
