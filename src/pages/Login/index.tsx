@@ -1,6 +1,11 @@
 import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Cookies from 'js-cookie';
+
+import { useErrors } from "../../hooks/useErrors";
+import api from "../../services/api";
+import isEmailValid from "../../utils/isEmailValid";
 
 import Title from "../../components/Title";
 import Button from "../../components/Button";
@@ -16,10 +21,6 @@ import {
     RightArea,
     AreaButton,
 } from "./styles";
-import User from "../../models/User";
-import { useErrors } from "../../hooks/useErrors";
-import isEmailValid from "../../utils/isEmailValid";
-import api from "../../services/api";
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -27,12 +28,6 @@ const Login: React.FC = () => {
     
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
-    const logged: User = JSON.parse(localStorage.getItem("logged") || "{}");
-
-    if (logged.name != null) {
-        navigate("/home");
-    }
 
     function checkIfIsEmailValid(email: string): boolean {
         if(!email) {
@@ -79,7 +74,13 @@ const Login: React.FC = () => {
             success: {
                 render({ data }) {   
                     navigate("/home");
-                    localStorage.setItem('token', `${data?.data}`);
+                    
+                    Cookies.set(
+                        'token',
+                        `${data?.data}`,
+                        { expires: 1 }
+                    );
+                    
                     return "Seja bem vindo!";
                 }
             },
