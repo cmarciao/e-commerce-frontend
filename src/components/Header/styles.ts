@@ -1,24 +1,23 @@
 import styled from "styled-components";
 
 export const Container = styled.header`
-    width: 100vw;
+    width: 100%;
+    max-width: 1180px;
+    
     position: fixed;
     background-color: var(--primary);
-
+    
+    left: 50%;
+    transform: translateX(-50%);
+    
     z-index: 1;
 `;
 
 export const Content = styled.div `
-    max-width: 1180px;
-    
-    width: 100%;
-    
-    margin: 0 auto;
-
     display: flex;
     justify-content: space-between;
 
-    padding: 8px 2%;
+    padding: 8px 1rem;
 `;
 
 export const InfoUser = styled.div`
