@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 import { ProductCartItem } from '../../components/ProductCartItem';
 import { useCart } from '../../hooks/useCart';
 import { formatCurrency } from '../../utils/formatCurrency';
+import emptyCartImg from '../../assets/empty-cart.png';
 
 import {
 	Container,
@@ -11,7 +12,8 @@ import {
 	Informations,
 	ProductItemList,
 	Summary,
-	SummaryContent
+	SummaryContent,
+	EmptyCart
 } from './styles';
 import { useEffect } from 'react';
 
@@ -26,9 +28,15 @@ const MyCarts: React.FC = () => {
 		<Container>
 			<Header page="my-carts" name="Mocked Name"/>
 			<Content>
-				<Informations>
+					{cart && cart.products.length === 0 && (
+						<EmptyCart>
+							<img src={emptyCartImg} alt="" />
+							<h1>Seu carrinho está vazio.</h1>
+						</EmptyCart>
+					)}
+
 					{cart && cart.products.length > 0 && (
-						<>
+						<Informations>
 							<ProductItemList>
 								<h1>Sua lista de pedidos</h1>
 								<div>
@@ -68,9 +76,9 @@ const MyCarts: React.FC = () => {
 
 									<Button title="Confirmar compra" />
 								</SummaryContent>
-							</Summary></>
+							</Summary>
+						</Informations>
 					)}
-				</Informations>
 			</Content>
 		</Container>
 	);

@@ -89,3 +89,10 @@ export const SummaryContent = styled.div `
         font-size: 1.25rem;
     }
 `;
+
+export const EmptyCart = styled.div`
+    width: 100%;
+    text-align: center;
+
+    margin-top: 4rem;
+`;
