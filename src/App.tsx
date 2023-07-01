@@ -10,25 +10,28 @@ import Register from "./pages/Register";
 
 import "./styles/globalcss.css";
 import "react-toastify/ReactToastify.min.css";
+import { CartProvider } from "./contexts/CartContext";
 
 const App: React.FC = () => {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<PageInital />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/my-carts" element={<MyCarts />} />
-            </Routes>
+            <CartProvider>
+                <Routes>
+                    <Route path="/" element={<PageInital />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/my-carts" element={<MyCarts />} />
+                </Routes>
 
-            <ToastContainer
-                theme="dark"
-                position="top-right"
-                autoClose={1000 * 2}
-                closeOnClick
-                pauseOnHover={false}
-            />
+                <ToastContainer
+                    theme="dark"
+                    position="top-right"
+                    autoClose={1000 * 2}
+                    closeOnClick
+                    pauseOnHover={false}
+                />
+            </CartProvider>
         </BrowserRouter>
     );
 };

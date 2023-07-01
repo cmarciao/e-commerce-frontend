@@ -1,95 +1,79 @@
-import React, { useEffect, useState } from "react";
+import Header from '../../components/Header';
+import Button from '../../components/Button';
 
-import api from "../../services/api";
-import Cart from "../../models/Cart";
-
-import Header from "../../components/Header";
-import Button from "../../components/Button";
-import { ProductCartItem } from "../../components/ProductCartItem";
+import { ProductCartItem } from '../../components/ProductCartItem';
+import { useCart } from '../../hooks/useCart';
+import { formatCurrency } from '../../utils/formatCurrency';
 
 import {
-    Container,
-    Content,
-    Informations,
-    ProductItemList,
-    Summary,
-    SummaryContent
-} from "./styles";
+	Container,
+	Content,
+	Informations,
+	ProductItemList,
+	Summary,
+	SummaryContent
+} from './styles';
+import { useEffect } from 'react';
 
 const MyCarts: React.FC = () => {
-    const [carts, setCarts] = useState<Cart>({} as Cart);
+	const { cart, loadCart } = useCart();
 
-    useEffect(() => {
-        async function loadCart() {
-            const response = await api.get('/carts', {
-                headers: {
-                    'x-user-id': 'c76ac4b3-afb0-4b1b-ad92-4bf98884c745'
-                }
-            });
+	useEffect(() => {
+		loadCart();
+	}, [loadCart]);
 
-            setCarts(response.data);
-        }
+	return (
+		<Container>
+			<Header page="my-carts" name="Mocked Name"/>
+			<Content>
+				<Informations>
+					{cart && cart.products.length > 0 && (
+						<>
+							<ProductItemList>
+								<h1>Sua lista de pedidos</h1>
+								<div>
+									{cart!.products.map((product) => (
+										<ProductCartItem
+											key={product.id}
+											product={product}
+										/>
+									))}
+								</div>
+							</ProductItemList>
 
-        loadCart();
-    }, []);
+							<Summary>
+								<h1>Resumo das compras</h1>
 
-    return (
-        <Container>
-            <Header page="my-carts" name="Mocked Name"/>
-            <Content>
-                <Informations>
-                    <ProductItemList>
-                        <h1>Sua lista de pedidos</h1>
-                        <div>
-                            {carts.products?.map((product) => (
-                                <ProductCartItem
-                                key={product.id}
-                                product={product}
-                                handleProduct={() => {}}
-                                />
-                            ))}
-                        </div>
-                    </ProductItemList>
+								<SummaryContent>
+									<p>Você tem {cart!.amount} {cart!.amount === 1 ? 'item' : 'itens'}</p>
+									<div>
+										<span>Preço total</span>
+										<span>
+											{formatCurrency(cart!.total)}
+										</span>
+									</div>
+									<div>
+										<span>Frete</span>
+										<span>Grátis</span>
+									</div>
 
-                    <Summary>
-                        <h1>Resumo das compras</h1>
+									<hr />
 
-                        <SummaryContent>
-                            <p>Você tem {carts.products?.length} {carts.products?.length === 1 ? 'item' : 'itens'}</p>
-                            <div>
-                                <span>Preço total</span>
-                                <span>
-                                    {new Intl.NumberFormat('pt-BR', {
-                                        style: 'currency',
-                                        currency: 'BRL'
-                                    }).format(carts.total)}
-                                </span>
-                            </div>
-                            <div>
-                                <span>Frete</span>
-                                <span>Grátis</span>
-                            </div>
+									<div>
+										<span>Preço total</span>
+										<span>
+											{formatCurrency(cart!.total)}
+										</span>
+									</div>
 
-                            <hr />
-
-                            <div>
-                                <span>Preço total</span>
-                                <span>
-                                    {new Intl.NumberFormat('pt-BR', {
-                                        style: 'currency',
-                                        currency: 'BRL'
-                                    }).format(carts.total)}
-                                </span>
-                            </div>
-
-                            <Button title="Confirmar compra" />
-                        </SummaryContent>
-                    </Summary>
-                </Informations>
-                
-            </Content>
-        </Container>
-    );
+									<Button title="Confirmar compra" />
+								</SummaryContent>
+							</Summary></>
+					)}
+				</Informations>
+			</Content>
+		</Container>
+	);
 };
 
 export default MyCarts;
