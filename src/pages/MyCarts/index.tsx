@@ -1,96 +1,79 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
+import Header from '../../components/Header';
+import Button from '../../components/Button';
 
-import Cart from "../../models/Cart";
-import User from "../../models/User";
-import Product from "../../models/Product";
+import { ProductCartItem } from '../../components/ProductCartItem';
+import { useCart } from '../../hooks/useCart';
+import { formatCurrency } from '../../utils/formatCurrency';
 
-import { ProductCartItem } from "../../components/ProductCartItem";
-import { Container, Content, Informations, ProductItemList, Summary, SummaryContent } from "./styles";
-import Button from "../../components/Button";
+import {
+	Container,
+	Content,
+	Informations,
+	ProductItemList,
+	Summary,
+	SummaryContent
+} from './styles';
+import { useEffect } from 'react';
 
 const MyCarts: React.FC = () => {
-    let allCarts: Cart[] = [];
-    const [user, setUser] = useState<User>();
-    const [data, setData] = useState<Product[]>([]);
+	const { cart, loadCart } = useCart();
 
-    const productPrice = data.reduce((acc, item) => {
-        acc += item.price * 0
-        return acc
-    }, 0);
+	useEffect(() => {
+		loadCart();
+	}, [loadCart]);
 
-    const formatedProductPrice = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(productPrice);
+	return (
+		<Container>
+			<Header page="my-carts" name="Mocked Name"/>
+			<Content>
+				<Informations>
+					{cart && cart.products.length > 0 && (
+						<>
+							<ProductItemList>
+								<h1>Sua lista de pedidos</h1>
+								<div>
+									{cart!.products.map((product) => (
+										<ProductCartItem
+											key={product.id}
+											product={product}
+										/>
+									))}
+								</div>
+							</ProductItemList>
 
-    const formatedTotalPrice = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(1938);
+							<Summary>
+								<h1>Resumo das compras</h1>
 
-    useEffect(() => {
-        setUser(JSON.parse(localStorage.getItem("logged") || "{}"));
-    }, []);
+								<SummaryContent>
+									<p>Você tem {cart!.amount} {cart!.amount === 1 ? 'item' : 'itens'}</p>
+									<div>
+										<span>Preço total</span>
+										<span>
+											{formatCurrency(cart!.total)}
+										</span>
+									</div>
+									<div>
+										<span>Frete</span>
+										<span>Grátis</span>
+									</div>
 
-    if (data.length === 0) {
-        allCarts = JSON.parse(localStorage.getItem("carts") || "[]");
-        allCarts.forEach((item) => {
-            if (item.idUser === user?.id) {
-                setData(item.products || []);
-            }
-        });
-    }
+									<hr />
 
-    return (
-        <Container>
-            <Header page="my-carts" name="Mocked Name"/>
-            <Content>
+									<div>
+										<span>Preço total</span>
+										<span>
+											{formatCurrency(cart!.total)}
+										</span>
+									</div>
 
-                <Informations>
-                    <ProductItemList>
-                        <h1>Sua lista de pedidos</h1>
-                        <div>
-                            {data.map((product) => (
-                                <ProductCartItem
-                                key={product.id}
-                                product={product}
-                                handleProduct={() => {}}
-                                />
-                            ))}
-                        </div>
-                    </ProductItemList>
-
-                    <Summary>
-                        <h1>Resumo das compras</h1>
-
-                        <SummaryContent>
-                            <p>Você tem {data.length} ite{data.length === 1 ? "m" : "ns"}</p>
-                            <div>
-                                <span>Preço total</span>
-                                <span>{formatedProductPrice}</span>
-                            </div>
-                            <div>
-                                <span>Frete</span>
-                                <span>Grátis</span>
-                            </div>
-
-                            <hr />
-
-                            <div>
-                                <span>Preço total</span>
-                                <span>{formatedTotalPrice}</span>
-                            </div>
-
-                            <Button title="Confirmar compra" />
-
-                        </SummaryContent>
-                    </Summary>
-                </Informations>
-                
-            </Content>
-        </Container>
-    );
+									<Button title="Confirmar compra" />
+								</SummaryContent>
+							</Summary></>
+					)}
+				</Informations>
+			</Content>
+		</Container>
+	);
 };
 
 export default MyCarts;

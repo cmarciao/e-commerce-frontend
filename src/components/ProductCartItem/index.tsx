@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import Product from "../../models/Product";
 
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,26 +12,14 @@ import {
     ActionButton,
     RightArea
 } from "./styles";
+import { useCart } from "../../hooks/useCart";
 
 interface ProductCartItemProps {
     product: Product;
-    handleProduct: (product: Product, count: number) => void;
 }
 
-const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduct }: ProductCartItemProps) => {
-    const [count, setCount] = useState<number>(1)
-
-    function handleIncremmentProduct() {
-        setCount(preState => preState + 1);
-    }
-
-    function handleDecremmentProduct() {
-        setCount(preState => 
-            preState === 1
-            ? preState
-            : preState - 1
-        );
-    }
+const ProductCartItem: React.FC<ProductCartItemProps> = ({ product }: ProductCartItemProps) => {
+    const {handleAddProduct, handleRemoveProduct, handleRemoveCartItem} = useCart();
 
     return (
         <Container key={product.id}>
@@ -45,13 +31,13 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduc
                     </LeftArea>
 
                     <RightArea>
-                        <ActionButton onClick={handleDecremmentProduct} disabled={count === 1}>
+                        <ActionButton onClick={() => handleRemoveProduct(product)} disabled={product.amount === 0}>
                             <HiMinusSm size="1.25rem" />
                         </ActionButton>
 
-                        <span>{count}</span>
+                        <span>{product.amount}</span>
                         
-                        <ActionButton onClick={handleIncremmentProduct} disabled={count === product.stock_quantity}>
+                        <ActionButton onClick={() => handleAddProduct(product, 1)} disabled={product.amount === product.stock_quantity}>
                             <MdOutlineAdd size="1.25rem" />
                         </ActionButton>
                     </RightArea>
@@ -63,7 +49,7 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product, handleProduc
                         }).format(product.price)}
                     </span>
 
-                    <button>
+                    <button onClick={() => handleRemoveCartItem(product)}>
                         <AiOutlineClose />
                     </button>
                 </AreaInfoProduct>
