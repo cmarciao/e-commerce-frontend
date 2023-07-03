@@ -26,6 +26,10 @@ export const InfoUser = styled.div`
     gap: 1rem;
 
     h3 {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-weight: 500;
     }
 

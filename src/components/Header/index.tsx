@@ -1,43 +1,64 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { FaUserCircle } from "react-icons/fa";
 import { HiShoppingCart, HiOutlineShoppingCart } from "react-icons/hi";
 import { HiLogout } from "react-icons/hi";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 
-import { Container, Content, InfoUser, ItemInput, AreaIcons } from "./styles";
-import Button from "../Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
-type HeaderProps = {
+import {
+    Container,
+    Content,
+    InfoUser,
+    ItemInput,
+    AreaIcons
+} from "./styles";
+
+interface HeaderProps {
     page: string;
-    name: string;
+    onSearchProduct: (filter: string) => void;
 };
 
-const Header: React.FC<HeaderProps> = ({ page, name }) => {
+export function Header({ page, onSearchProduct }: HeaderProps) {
     const navigate = useNavigate();
+    const { loadMe, formatedName } = useAuth();
+    const [isNameLoading, setIsNameLoading] = useState(true);
+
+    
+    useEffect(() => {
+        async function load() {
+            setIsNameLoading(true);
+            await loadMe();
+            setIsNameLoading(false);
+        }
+
+        load();
+    }, [loadMe]);
 
     function handleLogOut() {
-        localStorage.setItem("logged", "-1");
+        Cookies.remove('token')
         navigate("/");
     }
+
+    if(isNameLoading) return null;
 
     return (
         <Container>
             <Content>
                 <InfoUser>
                     <FaUserCircle size="2.5rem" />
-                    <h3>{name}</h3>
+                    <h3>{formatedName}</h3>
                 </InfoUser>
 
                 <ItemInput>
                     <input
                         type="text"
                         placeholder="Pesquise o seu produto"
+                        onChange={(e) => onSearchProduct(e.target.value)}
                     />
-                    <div>
-                        <Button title="Buscar" handleAction={() => {}}/>
-                    </div>
                 </ItemInput>
 
                 <AreaIcons>
@@ -49,12 +70,12 @@ const Header: React.FC<HeaderProps> = ({ page, name }) => {
                         {page !== "home" && <p>HOME</p>}
                     </Link>
 
-                    <Link to="/my-carts">
-                        {page === "my-carts" && <HiShoppingCart size="1.5rem" />}
-                        {page !== "my-carts" && <HiOutlineShoppingCart size="1.5rem" />}
+                    <Link to="/cart">
+                        {page === "cart" && <HiShoppingCart size="1.5rem" />}
+                        {page !== "cart" && <HiOutlineShoppingCart size="1.5rem" />}
 
-                        {page === "my-carts" && <strong>MY CARTS</strong>}
-                        {page !== "my-carts" && <p>MY CARTS</p>}
+                        {page === "cart" && <strong>MY CARTS</strong>}
+                        {page !== "cart" && <p>MY CARTS</p>}
                     </Link>
                     
                     <button>
@@ -66,5 +87,3 @@ const Header: React.FC<HeaderProps> = ({ page, name }) => {
         </Container>
     );
 };
-
-export default Header;
