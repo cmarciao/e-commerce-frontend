@@ -8,15 +8,22 @@ export function useCartPage() {
 	const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
 	useEffect(() => {
-		loadCart();
-	}, [loadCart]);
-	
-	useEffect(() => {
-		if(cart?.products != null) {
+		async function load() {
+			setIsLoadingCart(true);
+			await loadCart();
 			setIsLoadingCart(false);
 		}
 
+		load();
+
+	}, [loadCart]);
+	
+	useEffect(() => {
 		setFilteredProducts(cart?.products || []);
+		
+		return () => {
+			setFilteredProducts([]);
+		}
 	}, [cart?.products]);
 
 	const handleFilterList = useCallback((filter: string) => {
