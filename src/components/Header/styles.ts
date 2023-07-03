@@ -20,30 +20,6 @@ export const Content = styled.div `
     padding: 8px 1rem;
 `;
 
-export const InfoUser = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    h3 {
-        max-width: 200px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-weight: 500;
-    }
-
-    @media (max-width: 920px) {
-        h3 {
-            display: none;
-        }
-    }
-
-    @media (max-width: 520px) {
-        display: none;
-    }
-`;
-
 export const ItemInput = styled.div`
     max-width: 30vw;
     min-width: 380px;
@@ -64,29 +40,5 @@ export const ItemInput = styled.div`
 
     @media (max-width: 720px) {
         display: none;
-    }
-`;
-
-export const AreaIcons = styled.div`
-    display: flex;
-    align-items: center;
-
-    gap: 2rem;
-    
-    a {
-        text-align: center;
-        
-        strong, img {
-            display: block;
-        }
-    }
-
-    button {
-        background: none;
-    }
-
-    @media (max-width: 520px) {
-        margin: 0 auto;
-        gap: 4rem;
     }
 `;
