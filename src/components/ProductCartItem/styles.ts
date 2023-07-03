@@ -79,16 +79,26 @@ export const RightArea = styled.div`
     align-items: center;
 
     gap: 1rem;
+`;
 
+export const ItemQuantity = styled.div`
+    height: 30px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    padding: 4px 2rem;
+    
     & > span {
-        text-align: center;
-        color: #1a1a1a;
         font-weight: 500;
+        color: #1a1a1a;
+    }
 
-        border: 1px solid #1a1a1a;
-        border-radius: 4px;
-
-        padding: 4px 2rem;
+    & > div {
+        color: #1a1a1a;
     }
 `;
 

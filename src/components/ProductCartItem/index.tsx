@@ -1,4 +1,4 @@
-import Product from "../../models/Product";
+import Product from "../../types/Product";
 
 import { AiOutlineClose } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
@@ -10,16 +10,42 @@ import {
     AreaInfoProduct,
     LeftArea,
     ActionButton,
+    ItemQuantity,
     RightArea
 } from "./styles";
 import { useCart } from "../../hooks/useCart";
+import { formatCurrency } from "../../utils/formatCurrency";
+import { useState } from "react";
+import { Spinner } from "../Spinner";
 
 interface ProductCartItemProps {
     product: Product;
 }
 
-const ProductCartItem: React.FC<ProductCartItemProps> = ({ product }: ProductCartItemProps) => {
+export function ProductCartItem({ product }: ProductCartItemProps) {
     const {handleAddProduct, handleRemoveProduct, handleRemoveCartItem} = useCart();
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function handleAdd() {
+        setIsLoading(true);
+        await handleAddProduct(product, 1);
+        setIsLoading(false);
+    }
+
+    async function handleRemove() {
+        setIsLoading(true);
+        await handleRemoveProduct(product);
+        setIsLoading(false);
+    }
+
+    async function handleRemoveItem() {
+        setIsLoading(true);
+        await handleRemoveCartItem(product);
+        setIsLoading(false);
+    }
+
+    const isAddProductButtonDisabled = isLoading || product.amount === 0;
+    const isRemoveProductButtonDisabled = isLoading || product.amount === product.stock_quantity;
 
     return (
         <Container key={product.id}>
@@ -31,25 +57,25 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product }: ProductCar
                     </LeftArea>
 
                     <RightArea>
-                        <ActionButton onClick={() => handleRemoveProduct(product)} disabled={product.amount === 0}>
+                        <ActionButton onClick={handleRemove} disabled={isRemoveProductButtonDisabled}>
                             <HiMinusSm size="1.25rem" />
                         </ActionButton>
 
-                        <span>{product.amount}</span>
+                        <ItemQuantity>
+                                {isLoading && <Spinner size={8} />}
+                                {!isLoading && <span>{product.amount}</span>}
+                        </ItemQuantity>
                         
-                        <ActionButton onClick={() => handleAddProduct(product, 1)} disabled={product.amount === product.stock_quantity}>
+                        <ActionButton onClick={handleAdd} disabled={isAddProductButtonDisabled}>
                             <MdOutlineAdd size="1.25rem" />
                         </ActionButton>
                     </RightArea>
 
                     <span>
-                        {new Intl.NumberFormat('pt-BR', {
-                            style: "currency",
-                            currency: "BRL"
-                        }).format(product.price)}
+                        {formatCurrency(product.price)}
                     </span>
 
-                    <button onClick={() => handleRemoveCartItem(product)}>
+                    <button disabled={isLoading} onClick={handleRemoveItem}>
                         <AiOutlineClose />
                     </button>
                 </AreaInfoProduct>
@@ -57,5 +83,3 @@ const ProductCartItem: React.FC<ProductCartItemProps> = ({ product }: ProductCar
         </Container>
     )
 }
-
-export { ProductCartItem };

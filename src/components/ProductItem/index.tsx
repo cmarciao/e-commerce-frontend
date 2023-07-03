@@ -1,33 +1,26 @@
-import React, { useState } from 'react';
-
-import Product from '../../models/Product';
-import Button from '../Button';
+import Product from '../../types/Product';
+import { Button } from '../Button';
 
 import { MdOutlineAdd } from 'react-icons/md';
 import { HiMinusSm } from 'react-icons/hi';
 
+import { formatCurrency } from '../../utils/formatCurrency';
+import { useProductCartItem } from './useProductCartItem';
+
 import { ItemProduct, AreaInfoProduct, LeftArea, ActionButton, RightArea } from './styles';
-import { useCart } from '../../hooks/useCart';
 
 interface ProductItemProps {
     product: Product;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ product }: ProductItemProps) => {
-	const [count, setCount] = useState<number>(1);
-	const { handleAddProduct } = useCart();
-
-	function handleIncremmentProduct() {
-		setCount(preState => preState + 1);
-	}
-
-	function handleDecremmentProduct() {
-		setCount(preState =>
-			preState === 1
-				? preState
-				: preState - 1
-		);
-	}
+export function ProductItem({ product }: ProductItemProps) {
+	const {
+		count,
+		handleDecremmentProduct,
+		handleIncremmentProduct,
+		isLoading,
+		handleAddProducts
+	} = useProductCartItem(product);
 
 	return (
 		<ItemProduct key={product.id}>
@@ -36,10 +29,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }: ProductItemProps) 
 				<LeftArea>
 					<h1>{product.name}</h1>
 					<span>
-						{new Intl.NumberFormat('pt-BR', {
-							style: 'currency',
-							currency: 'BRL'
-						}).format(product.price)}
+						{formatCurrency(product.price)}
 					</span>
 				</LeftArea>
 
@@ -47,7 +37,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }: ProductItemProps) 
 					<span>{count}</span>
 
 					<div>
-						<ActionButton onClick={handleDecremmentProduct} disabled={count === 1}>
+						<ActionButton onClick={handleDecremmentProduct} disabled={count === 0}>
 							<HiMinusSm size="1.25rem" />
 						</ActionButton>
 
@@ -58,9 +48,11 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }: ProductItemProps) 
 				</RightArea>
 			</AreaInfoProduct>
 
-			<Button title="Adicionar" handleAction={() => handleAddProduct(product, count)} />
+			<Button
+				title="Adicionar"
+				isLoading={isLoading}
+				onAction={handleAddProducts}
+			/>
 		</ItemProduct>
 	);
 };
-
-export { ProductItem };
