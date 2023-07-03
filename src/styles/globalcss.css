@@ -40,23 +40,16 @@ body::-webkit-scrollbar-thumb {
     border-radius: 8px;
 }
   
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1080px) {
     html,
     body {
-        font-size: 90%;
+        font-size: 93.75%;
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 720px) {
     html,
     body {
-        font-size: 85%;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    html,
-    body {
-        font-size: 80%;
+        font-size: 87.5%;
     }
 }
