@@ -1,14 +1,15 @@
-import { ReactNode, createContext, useEffect, useState, useCallback } from 'react';
-import Cart from '../models/Cart';
-import api from '../services/api';
-import Product from '../models/Product';
+import { ReactNode, createContext, useState, useCallback } from 'react';
+import Cart from '../types/Cart';
+import Product from '../types/Product';
+import { toast } from 'react-toastify';
+import CartService from '../services/CartService';
 
 interface ICartContext {
     cart: Cart | null;
-    loadCart: () => void;
-    handleAddProduct: (product: Product, count: number) => void;
-    handleRemoveProduct: (product: Product) => void;
-    handleRemoveCartItem: (product: Product) => void;
+    loadCart: () => Promise<void>;
+    handleAddProduct: (product: Product, count: number) => Promise<void>;
+    handleRemoveProduct: (product: Product) => Promise<void>;
+    handleRemoveCartItem: (product: Product) => Promise<void>;
 }
 
 interface CartProviderProps {
@@ -21,80 +22,65 @@ export function CartProvider({ children }: CartProviderProps) {
 	const [cart, setCart] = useState<Cart | null>(null);
 
 	const loadCart = useCallback(async () => {
-		const response = await api.get('/carts', {
-			headers: {
-				'x-user-id': 'c76ac4b3-afb0-4b1b-ad92-4bf98884c745'
-			}
-		});
 
-		setCart(response.data);
+		try {
+			const cartResponse = await CartService.getCart();
+			setCart(cartResponse);
+
+		} catch {
+			toast.error("Erro ao carregar produtos");
+		}
 	}, []);
-
-	useEffect(() => {
-		loadCart();
-	}, [loadCart]);
 
 	async function handleAddProduct(product: Product, count: number) {
 		if(!cart) return;
-
+		
+		
 		const product_ids = [];
 		for(let i = 0; i < count; i++) {
 			product_ids.push(product.id);
 		}
-
+		
 		try {
-			const response = await api.patch('/carts/add-products', {
-				product_ids
-			}, {
-				headers: {
-					'x-user-id': 'c76ac4b3-afb0-4b1b-ad92-4bf98884c745'
-				}
-			})
-
-			setCart(response.data);
+			const cartResponse = await CartService.addProduct(product_ids);
+			setCart(cartResponse);
 		} catch(e) {
-			console.log(e);
+			toast.error('Erro ao cadastrar produto!');
 		}
 	}
-
+	
 	async function handleRemoveProduct(product: Product) {
 		if(!cart) return;
-
+		
+		
 		try {
-			const response = await api.patch('/carts/remove-products', {
-				product_id: product.id
-			}, {
-				headers: {
-					'x-user-id': 'c76ac4b3-afb0-4b1b-ad92-4bf98884c745'
-				}
-			});
-
-			setCart(response.data);
+			const cartResponse = await CartService.removeProduct(product.id);
+			setCart(cartResponse);
 		} catch(e) {
-			console.log(e);
+			toast.error('Erro ao remover produto!');
 		}
 	}
 
 	async function handleRemoveCartItem(product: Product) {
 		if(!cart) return;
-
+		
+		
 		try {
-			const response = await api.patch('/carts/remove-cart-items', {
-				product_id: product.id
-			}, {
-				headers: {
-					'x-user-id': 'c76ac4b3-afb0-4b1b-ad92-4bf98884c745'
-				}
-			});
-
-			setCart(response.data);
+			const cartResponse = await CartService.removeCartItem(product.id);
+			setCart(cartResponse);
 		} catch(e) {
 			console.log(e);
 		}
 	}
 
 	return (
-		<CartContext.Provider value={{ cart, loadCart, handleAddProduct, handleRemoveProduct, handleRemoveCartItem }}>
+		<CartContext.Provider value={{
+			cart,
+			loadCart,
+			handleAddProduct,
+			handleRemoveProduct,
+			handleRemoveCartItem
+		}}>
 			{children}
 		</CartContext.Provider>
 	);
