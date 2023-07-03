@@ -1,28 +1,21 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import { ToastContainer } from "react-toastify";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import MyCarts from "./pages/MyCarts";
-import PageInital from "./pages/PageInital/";
-import Register from "./pages/Register";
+import { CartProvider } from "./contexts/CartContext";
+import { AuthProvider } from "./contexts/AuthContext";
+
+
 
 import "./styles/globalcss.css";
 import "react-toastify/ReactToastify.min.css";
-import { CartProvider } from "./contexts/CartContext";
+import { Routes } from "./routes/Routes";
 
 const App: React.FC = () => {
     return (
-        <BrowserRouter>
+        <AuthProvider>
             <CartProvider>
-                <Routes>
-                    <Route path="/" element={<PageInital />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/my-carts" element={<MyCarts />} />
-                </Routes>
+                <Routes />
 
                 <ToastContainer
                     theme="dark"
@@ -30,9 +23,9 @@ const App: React.FC = () => {
                     autoClose={1000 * 2}
                     closeOnClick
                     pauseOnHover={false}
-                />
-            </CartProvider>
-        </BrowserRouter>
+                    />
+                </CartProvider>
+        </AuthProvider>
     );
 };
 
