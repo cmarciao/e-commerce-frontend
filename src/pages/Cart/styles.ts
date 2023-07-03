@@ -20,7 +20,7 @@ export const Informations = styled.section `
 
     gap: 1.5rem;
     
-    @media (max-width: 863px) {
+    @media (max-width: 903px) {
         flex-direction: column-reverse;
     }
 `;
