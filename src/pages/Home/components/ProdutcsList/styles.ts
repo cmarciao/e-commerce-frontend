@@ -22,12 +22,12 @@ export const Content = styled.div`
         justify-content: space-between;
     }
 
-    @media(max-width: 662px) {
+    @media(max-width: 750px) {
         grid-template-areas: "div div";
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
 
-    @media(max-width: 414px) {
+    @media(max-width: 500px) {
         grid-template-areas: "div";
         justify-content: center;
     }
