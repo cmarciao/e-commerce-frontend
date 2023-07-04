@@ -13,6 +13,7 @@ export function useRegister() {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function checkIfIsNameValid(name: string) {
         if(!name) {
@@ -58,21 +59,23 @@ export function useRegister() {
             && checkIfIsPasswordValid(password);
     }
 
-    function handleRegister(e: FormEvent) {
+    async function handleRegister(e: FormEvent) {
         e.preventDefault();
 
         if (!formValidate()) return;
-        
-        toast.promise(UserService.createUser(name, email, password), {
-            success: {
-                render() {   
-                    navigate("/login");
-                    return "Usuário cadastrado!";
-                }
-            },
-            pending: 'Cadastrando usuário...',
-            error: 'Erro ao cadastrar usuário'
-        });
+
+        setIsLoading(true);
+
+        try {
+            await UserService.createUser(name, email, password);
+            toast.success('Usuário cadastrado!')
+            
+            navigate("/login");
+        } catch(e) {
+            toast.error('Erro ao cadastrar usuário');
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return {
@@ -80,6 +83,7 @@ export function useRegister() {
         handleRegister,
         setName,
         setEmail,
-        setPassword
+        setPassword,
+        isLoading
     };
 }

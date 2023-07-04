@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Input } from "../../../../components/Input";
 
 import { FiUser } from "react-icons/fi";
@@ -15,9 +14,17 @@ interface RightAreaProps {
     setName: Dispatch<SetStateAction<string>>;
     setEmail: Dispatch<SetStateAction<string>>;
     setPassword: Dispatch<SetStateAction<string>>;
+    isLoading: boolean;
 }
 
-export function RightArea({ onRegister, getErrorByFieldName, setName, setEmail, setPassword }: RightAreaProps) {
+export function RightArea({
+    onRegister,
+    getErrorByFieldName,
+    setName,
+    setEmail,
+    setPassword,
+    isLoading
+}: RightAreaProps) {
     return (
         <Container>
             <form noValidate onSubmit={onRegister}>
@@ -54,13 +61,13 @@ export function RightArea({ onRegister, getErrorByFieldName, setName, setEmail, 
                 </div>
 
                 <AreaButton>
-                    <Button title="Cadastrar" type="submit" />
+                    <Button
+                        title="Cadastrar"
+                        type="submit" 
+                        isLoading={isLoading}
+                    />
                 </AreaButton>
             </form>
-
-            <Link to="/">
-                <Button title="Voltar" />
-            </Link>
         </Container>
     )
 }

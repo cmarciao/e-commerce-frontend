@@ -15,6 +15,7 @@ export function Register() {
         setName,
         setEmail,
         setPassword,
+        isLoading
     } = useRegister();
 
     return (
@@ -28,6 +29,7 @@ export function Register() {
                     setName={setName}
                     setEmail={setEmail}
                     setPassword={setPassword}
+                    isLoading={isLoading}
                 />
             </Content>
         </Container>
