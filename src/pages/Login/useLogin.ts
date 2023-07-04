@@ -12,6 +12,7 @@ export function useLogin() {
     
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function checkIfIsEmailValid(email: string): boolean {
         if(!email) {
@@ -47,32 +48,34 @@ export function useLogin() {
         return  isEmailValid && isPasswordValid; 
     }
 
-    function handleLogin(e: FormEvent) {
+    async function handleLogin(e: FormEvent) {
         e.preventDefault();
 
         if (!formValidate()) return;
 
-        toast.promise(AuthService.login(email, password), {
-            success: {
-                render({ data }) {   
-                    navigate("/home");
+        setIsLoading(true);
+
+        try {
+            const response = await AuthService.login(email, password)
+            const token = response.data;
+            
+            Cookies.set('token', token,{
+                expires: 1
+            });
+
+            navigate("/home");
                     
-                    Cookies.set(
-                        'token',
-                        `${data?.data}`,
-                        { expires: 1 }
-                    );
-                    
-                    return "Seja bem vindo!";
-                }
-            },
-            pending: 'Validando usuário...',
-            error: 'Email ou senha incorretos!'
-        });
+            toast.success('Seja bem vindo!');
+        } catch {
+            toast.success('Email ou senha incorretos!');
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return {
         handleLogin,
+        isLoading,
         getErrorByFieldName,
         setEmail,
         setPassword

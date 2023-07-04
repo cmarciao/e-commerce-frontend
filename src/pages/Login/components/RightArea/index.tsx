@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLock } from "react-icons/ai";
 
@@ -14,9 +12,16 @@ interface RightAreaProps {
     getErrorByFieldName: (fieldName: string) => string;
     setEmail: Dispatch<SetStateAction<string>>;
     setPassword: Dispatch<SetStateAction<string>>;
+    isLoading: boolean;
 }
 
-export function RightArea({ onLogin, getErrorByFieldName, setEmail, setPassword }: RightAreaProps) {
+export function RightArea({
+    onLogin,
+    getErrorByFieldName,
+    setEmail,
+    setPassword,
+    isLoading
+}: RightAreaProps) {
     return (
         <Container>
             <form noValidate onSubmit={onLogin}>
@@ -43,13 +48,13 @@ export function RightArea({ onLogin, getErrorByFieldName, setEmail, setPassword 
                 </div>
 
                 <AreaButton>
-                    <Button title="Entrar" type="submit" />
+                    <Button
+                        title="Entrar"
+                        type="submit"
+                        isLoading={isLoading}
+                    />
                 </AreaButton>
             </form>
-
-            <Link to="/">
-                <Button title="Voltar" />
-            </Link>
         </Container>
     )
 }

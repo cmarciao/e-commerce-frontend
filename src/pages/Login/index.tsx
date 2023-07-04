@@ -12,6 +12,7 @@ import {
 export function Login() {
     const {
         handleLogin,
+        isLoading,
         getErrorByFieldName,
         setEmail,
         setPassword
@@ -23,6 +24,7 @@ export function Login() {
                 <LeftArea />
                 <RightArea
                     onLogin={handleLogin}
+                    isLoading={isLoading}
                     getErrorByFieldName={getErrorByFieldName}
                     setEmail={setEmail}
                     setPassword={setPassword}
