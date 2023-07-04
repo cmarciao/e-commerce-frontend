@@ -1,20 +1,15 @@
 import React from "react";
-
 import { ToastContainer } from "react-toastify";
 
-import { CartProvider } from "./contexts/CartContext";
+import { Routes } from "./routes/Routes";
 import { AuthProvider } from "./contexts/AuthContext";
-
-
 
 import "./styles/globalcss.css";
 import "react-toastify/ReactToastify.min.css";
-import { Routes } from "./routes/Routes";
 
 const App: React.FC = () => {
     return (
         <AuthProvider>
-            <CartProvider>
                 <Routes />
 
                 <ToastContainer
@@ -24,7 +19,6 @@ const App: React.FC = () => {
                     closeOnClick
                     pauseOnHover={false}
                     />
-                </CartProvider>
         </AuthProvider>
     );
 };
