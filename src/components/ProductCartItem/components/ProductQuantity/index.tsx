@@ -1,6 +1,5 @@
 import { HiMinusSm } from "react-icons/hi";
 import { MdOutlineAdd } from "react-icons/md";
-import { Spinner } from "../../../Spinner";
 
 import { ActionButton, Container, ItemQuantity } from "./styles";
 
@@ -27,9 +26,8 @@ export function ProductQuantity({
                 <HiMinusSm size="1.25rem" />
             </ActionButton>
 
-            <ItemQuantity>
-                    {isLoading && <Spinner size={8} />}
-                    {!isLoading && <span>{amount}</span>}
+            <ItemQuantity isLoading={isLoading}>
+                <span>{amount}</span>
             </ItemQuantity>
             
             <ActionButton onClick={onAddProduct} disabled={isAddProductButtonDisabled}>

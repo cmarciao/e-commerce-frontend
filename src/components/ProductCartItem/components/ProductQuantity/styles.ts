@@ -7,7 +7,11 @@ export const Container = styled.div`
     gap: 1rem;
 `;
 
-export const ItemQuantity = styled.div`
+interface ItemQuantityProps {
+    isLoading: boolean;
+}
+
+export const ItemQuantity = styled.div<ItemQuantityProps>`
     height: 30px;
     
     display: flex;
@@ -17,6 +21,8 @@ export const ItemQuantity = styled.div`
     border: 1px solid #1a1a1a;
     border-radius: 4px;
     padding: 4px 2rem;
+
+    opacity: ${({ isLoading }) => isLoading ? 0.5 : 1};
     
     & > span {
         font-weight: 500;
