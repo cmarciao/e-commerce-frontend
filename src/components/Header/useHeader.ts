@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 export function useHeader() {
     const navigate = useNavigate();
-    const { loadMe, formatedName } = useAuth();
+    const { loadMe, formatedName, clearUser } = useAuth();
     const [isNameLoading, setIsNameLoading] = useState(true);
     
     useEffect(() => {
@@ -20,7 +20,9 @@ export function useHeader() {
     }, [loadMe]);
 
     function handleLogOut() {
+        clearUser();
         Cookies.remove('token')
+        
         navigate("/");
     }
 
