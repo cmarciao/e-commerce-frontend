@@ -8,6 +8,7 @@ interface ICreateContext {
     formatedName: string;
     loadMe: () => Promise<void>;
     isAuth: () => boolean;
+    clearUser: () => void;
 }
 
 interface AuthProviderProps {
@@ -42,8 +43,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         return name;
     }, [user]);
 
+    function clearUser() {
+        setUser(null);
+    }
+
     return (
-        <UserContext.Provider value={{ user, formatedName, isAuth, loadMe }}>
+        <UserContext.Provider value={{ user, formatedName, isAuth, loadMe, clearUser }}>
             {children}
         </UserContext.Provider>
     )
