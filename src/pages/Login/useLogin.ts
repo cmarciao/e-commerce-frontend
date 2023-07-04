@@ -67,7 +67,7 @@ export function useLogin() {
                     
             toast.success('Seja bem vindo!');
         } catch {
-            toast.success('Email ou senha incorretos!');
+            toast.error('Email ou senha incorretos!');
         } finally {
             setIsLoading(false);
         }
