@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState, useCallback } from 'react';
+import { ReactNode, createContext, useState, useCallback, useEffect } from 'react';
 import Cart from '../types/Cart';
 import Product from '../types/Product';
 import { toast } from 'react-toastify';
@@ -21,8 +21,13 @@ export const CartContext = createContext({} as ICartContext);
 export function CartProvider({ children }: CartProviderProps) {
 	const [cart, setCart] = useState<Cart | null>(null);
 
-	const loadCart = useCallback(async () => {
+	useEffect(() => {
+		return () => {
+			setCart(null);
+		}
+	}, []);
 
+	const loadCart = useCallback(async () => {
 		try {
 			const cartResponse = await CartService.getCart();
 			setCart(cartResponse);
