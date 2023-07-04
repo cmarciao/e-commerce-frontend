@@ -1,19 +1,31 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+
 import { useAuth } from "../hooks/useAuth";
+import { CartProvider } from "../contexts/CartContext";
 
 export function ProtectedRoutes() {
     const { pathname } = useLocation();
     const { isAuth } = useAuth();
 
     if(isAuth()) {
-        if(pathname === '/register' || pathname === '/login' || pathname === '/') {
-            return <Navigate to='/home' />
-        }
-    } else {
-        if(pathname === '/cart' || pathname === '/home') {
-            return <Navigate to='/' />
-        }
+        const validPathList = ['/home', '/cart'];
+        const isValidPath = validPathList.includes(pathname);
+    
+        return (
+            <CartProvider>
+                {isValidPath && <Outlet />}
+                {!isValidPath && <Navigate to='/home' />}
+            </CartProvider>
+        );
     }
 
-    return <Outlet />;
+    const validPathList = ['/register', '/login', '/'];
+    const isValidPath = validPathList.includes(pathname);
+
+    return (
+        <>
+            {isValidPath && <Outlet />}
+            {!isValidPath && <Navigate to='/' />}
+        </>
+    );
 }
