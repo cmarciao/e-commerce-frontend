@@ -9,6 +9,7 @@ interface ICreateContext {
     loadMe: () => Promise<void>;
     isAuth: () => boolean;
     clearUser: () => void;
+    isNameLoading: boolean;
 }
 
 interface AuthProviderProps {
@@ -19,11 +20,15 @@ export const UserContext = createContext<ICreateContext>({} as ICreateContext);
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<null | User>(null);
+    const [isNameLoading, setIsNameLoading] = useState(true);
 
     const loadMe = useCallback(async () => {
         if(!user) {
+            setIsNameLoading(true);
             const user = await AuthService.me();
             setUser(user);
+
+            setIsNameLoading(false);
         }
     }, [user]);
 
@@ -48,7 +53,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <UserContext.Provider value={{ user, formatedName, isAuth, loadMe, clearUser }}>
+        <UserContext.Provider value={{
+            user,
+            formatedName,
+            isAuth,
+            loadMe,
+            clearUser,
+            isNameLoading
+        }}>
             {children}
         </UserContext.Provider>
     )

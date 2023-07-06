@@ -5,6 +5,7 @@ import { Register } from "../pages/Register";
 import { Login } from "../pages/Login";
 import { Home } from "../pages/Home";
 import { Cart } from "../pages/Cart";
+import { Thanks } from "../pages/Thanks";
 
 import { ProtectedRoutes } from "./ProtectedRoutes";
 
@@ -18,6 +19,7 @@ export function Routes() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/thanks" element={<Thanks />} />
                 </Route>
             </ReactRoutes>
         </BrowserRouter>
