@@ -16,6 +16,7 @@ import {
 export function Cart() {
 	const {
 		handleFilterList,
+		handleConfirmCart,
 		isLoadingCart,
 		cart,
 		filteredProducts,
@@ -40,7 +41,10 @@ export function Cart() {
 						<Informations>
 							<ProductsList products={filteredProducts} />
 
-							<Summary cart={cart} />
+							<Summary
+								cart={cart}
+								onConfirmCart={handleConfirmCart}
+							/>
 						</Informations>
 					)}
 				</Content>

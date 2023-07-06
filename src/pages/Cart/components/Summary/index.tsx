@@ -7,9 +7,10 @@ import { Container, Content } from "./styles";
 
 interface SummaryProps {
     cart: Cart;
+    onConfirmCart: () => void;
 }
 
-export function Summary({ cart }: SummaryProps) {
+export function Summary({ cart, onConfirmCart }: SummaryProps) {
     return (
         <Container>
             <h1>Resumo das compras</h1>
@@ -36,7 +37,10 @@ export function Summary({ cart }: SummaryProps) {
                     </span>
                 </div>
 
-                <Button title="Confirmar compra" />
+                <Button
+                    title="Confirmar compra"
+                    onAction={onConfirmCart}
+                />
             </Content>
         </Container>
     )

@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useCart } from "../../hooks/useCart";
 import Product from "../../types/Product";
+import { useNavigate } from "react-router-dom";
 
 export function useCartPage() {
+	const navigate = useNavigate();
     const { cart, loadCart } = useCart();
 	const [isLoadingCart, setIsLoadingCart] = useState(true);
 	const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -37,8 +39,13 @@ export function useCartPage() {
 		setFilteredProducts(filteredList);
 	}, [cart]);
 
+	function handleConfirmCart() {
+		navigate('/thanks');
+	}
+
     return {
         handleFilterList,
+		handleConfirmCart,
 		isLoadingCart,
 		cart,
 		filteredProducts,
