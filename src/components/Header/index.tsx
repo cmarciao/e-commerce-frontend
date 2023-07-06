@@ -11,7 +11,7 @@ import {
 
 interface HeaderProps {
     page: string;
-    onSearchProduct: (filter: string) => void;
+    onSearchProduct?: (filter: string) => void;
 };
 
 export function Header({ page, onSearchProduct }: HeaderProps) {
@@ -28,13 +28,15 @@ export function Header({ page, onSearchProduct }: HeaderProps) {
             <Content>
                 <InfoUser formatedName={formatedName} />
 
-                <ItemInput>
-                    <input
-                        type="text"
-                        placeholder="Pesquise o seu produto"
-                        onChange={(e) => onSearchProduct(e.target.value)}
-                    />
-                </ItemInput>
+                {onSearchProduct && (
+                    <ItemInput>
+                        <input
+                            type="text"
+                            placeholder="Pesquise o seu produto"
+                            onChange={(e) => onSearchProduct(e.target.value)}
+                        />
+                    </ItemInput>
+                )}
 
                 <AreaIcons
                     page={page}

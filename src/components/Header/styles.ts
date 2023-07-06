@@ -11,9 +11,10 @@ export const Container = styled.header`
     transform: translateX(-50%);
     
     z-index: 1;
-`;
+    `;
 
 export const Content = styled.div `
+    height: 4rem;
     display: flex;
     justify-content: space-between;
 
