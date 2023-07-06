@@ -24,4 +24,8 @@ export const ButtonContainer = styled.button`
         filter: brightness(0.5);
         cursor: not-allowed;
     }
+
+    &:hover {
+        filter: brightness(0.8);
+    }
 `;

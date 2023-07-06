@@ -1,17 +1,27 @@
-import React, { ButtonHTMLAttributes } from "react";
-
-import { ButtonContainer } from "./styles";
 import { Spinner } from "../Spinner";
+import { ButtonContainer } from "./styles";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps {
     title: string;
+    type?: 'submit' | 'button' | 'reset';
     isLoading?: boolean;
     onAction?: () => void;
 }
 
-export function Button({ title, isLoading = false, onAction, ...props }: ButtonProps){
+export function Button({
+    title,
+    type = 'button',
+    isLoading = false,
+    onAction,
+    ...props
+}: ButtonProps){
     return (
-        <ButtonContainer {...props} onClick={onAction} disabled={isLoading}>
+        <ButtonContainer
+            onClick={onAction}
+            disabled={isLoading}
+            type={type}
+            {...props}
+        >
             {isLoading && (
                 <Spinner size={16}/>
             )}
