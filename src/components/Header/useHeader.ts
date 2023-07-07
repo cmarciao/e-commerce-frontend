@@ -16,7 +16,7 @@ export function useHeader() {
         clearUser();
         Cookies.remove('token')
         
-        navigate("/");
+        navigate("/login");
     }
 
     return {

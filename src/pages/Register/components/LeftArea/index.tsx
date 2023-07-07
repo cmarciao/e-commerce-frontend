@@ -14,7 +14,7 @@ export function LeftArea() {
 
                 <AreaButton>
                     <Link to="/">
-                        <Button title="Voltar" />
+                        <Button>Voltar</Button>
                     </Link>
                 </AreaButton>
             </Content>

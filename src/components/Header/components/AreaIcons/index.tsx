@@ -8,6 +8,8 @@ import {
 } from "react-icons/hi";
 
 import { Container } from "./styles";
+import { Modal } from "../../../Modal";
+import { useState } from "react";
 
 interface AreaIconsProps {
     page: string;
@@ -15,6 +17,16 @@ interface AreaIconsProps {
 }
 
 export function AreaIcons({ page, onLogout }: AreaIconsProps) {
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+    function handleOpenLogoutModal() {
+        setIsLogoutModalOpen(true);
+    }
+
+    function handleCloseLogoutModal() {
+        setIsLogoutModalOpen(false);
+    }
+
     return (
         <Container>
             <Link to="/home">
@@ -33,10 +45,22 @@ export function AreaIcons({ page, onLogout }: AreaIconsProps) {
                 {page !== "cart" && <p>MY CARTS</p>}
             </Link>
             
-            <button>
-                <HiLogout size="1.5rem" onClick={onLogout} />
+            <button onClick={handleOpenLogoutModal}>
+                <HiLogout size="1.5rem" />
                 <p>LOGOUT</p>
             </button>
+
+            <Modal
+                title="Você deseja fazer logout?"
+                isVisible={isLogoutModalOpen}
+                isLoading={false}
+                confirmLabel="Sair"
+                cancelLabel="Cancelar"
+                onConfirm={onLogout}
+                onCancel={handleCloseLogoutModal}
+            >
+                <p>Sua sessão será encerrada e você irá retornar para página de login.</p>
+            </Modal>
         </Container>
     );
 }

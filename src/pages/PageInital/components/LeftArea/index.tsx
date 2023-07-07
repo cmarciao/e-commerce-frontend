@@ -19,10 +19,10 @@ export function LeftArea() {
 
                 <AreaButton>
                     <Link to="/register">
-                        <Button title="Cadastrar" />
+                        <Button>Cadastrar</Button>
                     </Link>
                     <Link to="/login">
-                        <Button title="Fazer login" />
+                        <Button>Fazer login</Button>
                     </Link>
                 </AreaButton>
             </Content>

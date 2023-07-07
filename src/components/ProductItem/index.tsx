@@ -33,10 +33,11 @@ export function ProductItem({ product }: ProductItemProps) {
 			/>
 
 			<Button
-				title="Adicionar"
 				isLoading={isLoading}
-				onAction={handleAddProducts}
-			/>
+				onClick={handleAddProducts}
+			>
+				Adicionar
+			</Button>
 		</ItemProduct>
 	);
 };

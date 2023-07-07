@@ -48,11 +48,9 @@ export function RightArea({
                 </div>
 
                 <AreaButton>
-                    <Button
-                        title="Entrar"
-                        type="submit"
-                        isLoading={isLoading}
-                    />
+                    <Button type="submit" isLoading={isLoading}>
+                        Entrar
+                    </Button>
                 </AreaButton>
             </form>
         </Container>

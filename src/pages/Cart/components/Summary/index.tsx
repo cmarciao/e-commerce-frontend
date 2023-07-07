@@ -1,9 +1,11 @@
 import Cart from "../../../../types/Cart";
 import { formatCurrency } from "../../../../utils/formatCurrency";
 
+import { Modal } from "../../../../components/Modal";
 import { Button } from "../../../../components/Button";
 
 import { Container, Content } from "./styles";
+import { useState } from "react";
 
 interface SummaryProps {
     cart: Cart;
@@ -11,6 +13,16 @@ interface SummaryProps {
 }
 
 export function Summary({ cart, onConfirmCart }: SummaryProps) {
+    const [isConfirmCartModalOpen, setIsConfirmCartModalOpen] = useState(false);
+
+    function handleOpenConfirmCartModal() {
+        setIsConfirmCartModalOpen(true);   
+    }
+
+    function handleCloseConfirmCartModal() {
+        setIsConfirmCartModalOpen(false);   
+    }
+
     return (
         <Container>
             <h1>Resumo das compras</h1>
@@ -37,11 +49,22 @@ export function Summary({ cart, onConfirmCart }: SummaryProps) {
                     </span>
                 </div>
 
-                <Button
-                    title="Confirmar compra"
-                    onAction={onConfirmCart}
-                />
+                <Button onClick={handleOpenConfirmCartModal} >
+                    Confirmar compra
+                </Button>
             </Content>
+
+            <Modal
+                title="Confirmar a compra?"
+                isVisible={isConfirmCartModalOpen}
+                isLoading={false}
+                confirmLabel="Confirmar"
+                cancelLabel="Cancelar"
+                onConfirm={onConfirmCart}
+                onCancel={handleCloseConfirmCartModal}
+            >
+                <p>Deseja finalizar as suas compras?</p>
+            </Modal>
         </Container>
     )
 }

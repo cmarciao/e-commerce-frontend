@@ -61,11 +61,9 @@ export function RightArea({
                 </div>
 
                 <AreaButton>
-                    <Button
-                        title="Cadastrar"
-                        type="submit" 
-                        isLoading={isLoading}
-                    />
+                    <Button type="submit" isLoading={isLoading}>
+                        Cadastrar
+                    </Button>
                 </AreaButton>
             </form>
         </Container>

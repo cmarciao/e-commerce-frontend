@@ -27,9 +27,9 @@ export function Thanks() {
                 <p>Agradeço por ter usado esse meu mini e-commerce, espero que tenha gostado. 🙃</p>
 
                 <Link to={"/home"}>
-                    <Button
-                        title="Voltar para página inicial"
-                    />
+                    <Button>
+                        Voltar para página inicial
+                    </Button>
                 </Link>
             </Content>
         </Container>
