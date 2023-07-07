@@ -49,7 +49,7 @@ export const Overlay = styled.div<AnimationEndProps>`
     align-items: center;
     justify-content: center;
 
-    position: absolute;
+    position: fixed;
     inset: 0;
 
     backdrop-filter: blur(2px);
