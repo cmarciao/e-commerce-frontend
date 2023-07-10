@@ -29,6 +29,12 @@ class CartService {
         const response = await api.patch('/carts/remove-cart-items', { product_id });
         return response.data;
     }
+
+    async completeSale() {
+        await delay(500);
+
+        await api.post('/carts/confirm');
+    }
 }
 
 export default new CartService();

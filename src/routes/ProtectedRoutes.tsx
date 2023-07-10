@@ -8,13 +8,13 @@ export function ProtectedRoutes() {
     const { isAuth } = useAuth();
 
     if(isAuth()) {
-        const validPathList = ['/home', '/cart', '/thanks'];
+        const validPathList = ['/products', '/cart', '/purchases', '/thanks'];
         const isValidPath = validPathList.includes(pathname);
     
         return (
             <CartProvider>
                 {isValidPath && <Outlet />}
-                {!isValidPath && <Navigate to='/home' />}
+                {!isValidPath && <Navigate to='/products' />}
             </CartProvider>
         );
     }

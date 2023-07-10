@@ -1,10 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import { useErrors } from "../../hooks/useErrors";
 import { FormEvent, useState } from "react";
-import isEmailValid from "../../utils/isEmailValid";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+
 import AuthService from "../../services/AuthService";
+
+import { useErrors } from "../../hooks/useErrors";
+import isEmailValid from "../../utils/isEmailValid";
 
 export function useLogin() {
     const navigate = useNavigate();
@@ -63,7 +65,7 @@ export function useLogin() {
                 expires: 1
             });
 
-            navigate("/home");
+            navigate("/products");
                     
             toast.success('Seja bem vindo!');
         } catch {

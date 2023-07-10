@@ -13,13 +13,13 @@ export const Container = styled.div`
         font-weight: 500;
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 1000px) {
         h3 {
             display: none;
         }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 850px) {
         display: none;
     }
 `;

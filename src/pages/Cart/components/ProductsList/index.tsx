@@ -1,5 +1,6 @@
-import { ProductCartItem } from "../../../../components/ProductCartItem";
 import Product from "../../../../types/Product";
+import { ProductCartItem } from "../../../../components/ProductCartItem";
+
 import { Container } from "./styles";
 
 interface ProductsListProps {
@@ -9,7 +10,7 @@ interface ProductsListProps {
 export function ProductsList({ products }: ProductsListProps) {
     return (
         <Container>
-            <h1>Sua lista de pedidos</h1>
+            <h1>Carrinho de compras</h1>
             <div>
                 {products.map((product) => (
                     <ProductCartItem

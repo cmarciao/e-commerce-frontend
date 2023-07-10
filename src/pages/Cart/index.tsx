@@ -15,6 +15,7 @@ import {
 
 export function Cart() {
 	const {
+		isSubmitting,
 		handleFilterList,
 		handleConfirmCart,
 		isLoadingCart,
@@ -35,13 +36,14 @@ export function Cart() {
 
 			{!isLoadingCart && (
 				<Content>
-					{!hasProducts && <EmptyCart />}
+					{!hasProducts && <EmptyCart description='Seu carrinho está vazio.'/>}
 
 					{hasProducts && (
 						<Informations>
 							<ProductsList products={filteredProducts} />
 
 							<Summary
+								isLoading={isSubmitting}
 								cart={cart}
 								onConfirmCart={handleConfirmCart}
 							/>

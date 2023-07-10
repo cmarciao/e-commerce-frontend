@@ -1,4 +1,4 @@
-import { useHome } from './useHome';
+import { useHome } from './useProducts';
 
 import { Header } from '../../components/Header';
 import { Loader } from '../../components/Loader';
@@ -8,7 +8,7 @@ import {
 	Container
 } from './styles';
 
-export function Home() {
+export function Products() {
 	const {
 		handleFilterList,
 		isLoadingProducts,
@@ -18,7 +18,7 @@ export function Home() {
 	return (
 		<Container>
 			<Header
-				page="home"
+				page="products"
 				onSearchProduct={handleFilterList}
 			/>
 			

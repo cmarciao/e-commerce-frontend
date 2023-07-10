@@ -8,11 +8,12 @@ import { Container, Content } from "./styles";
 import { useState } from "react";
 
 interface SummaryProps {
+    isLoading: boolean;
     cart: Cart;
     onConfirmCart: () => void;
 }
 
-export function Summary({ cart, onConfirmCart }: SummaryProps) {
+export function Summary({ isLoading, cart, onConfirmCart }: SummaryProps) {
     const [isConfirmCartModalOpen, setIsConfirmCartModalOpen] = useState(false);
 
     function handleOpenConfirmCartModal() {
@@ -57,7 +58,7 @@ export function Summary({ cart, onConfirmCart }: SummaryProps) {
             <Modal
                 title="Confirmar a compra?"
                 isVisible={isConfirmCartModalOpen}
-                isLoading={false}
+                isLoading={isLoading}
                 confirmLabel="Confirmar"
                 cancelLabel="Cancelar"
                 onConfirm={onConfirmCart}

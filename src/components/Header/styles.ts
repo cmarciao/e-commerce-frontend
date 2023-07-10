@@ -22,7 +22,7 @@ export const Content = styled.div `
 `;
 
 export const ItemInput = styled.div`
-    max-width: 30vw;
+    max-width: 20vw;
     min-width: 380px;
 
     width: 100%;
@@ -39,7 +39,7 @@ export const ItemInput = styled.div`
         color: black;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 800px) {
         display: none;
     }
 `;

@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import { useCart } from "../../hooks/useCart";
-import Product from "../../types/Product";
 import { useNavigate } from "react-router-dom";
+
+import { useCart } from "../../hooks/useCart";
+
+import CartService from "../../services/CartService";
+import Product from "../../types/Product";
 
 export function useCartPage() {
 	const navigate = useNavigate();
     const { cart, loadCart } = useCart();
 	const [isLoadingCart, setIsLoadingCart] = useState(true);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
 	useEffect(() => {
@@ -39,11 +43,18 @@ export function useCartPage() {
 		setFilteredProducts(filteredList);
 	}, [cart]);
 
-	function handleConfirmCart() {
-		navigate('/thanks');
+	async function handleConfirmCart() {
+		try {
+			setIsSubmitting(true);
+			await CartService.completeSale();
+			navigate('/thanks');
+		} finally {
+			setIsSubmitting(false);
+		}
 	}
 
     return {
+		isSubmitting,
         handleFilterList,
 		handleConfirmCart,
 		isLoadingCart,

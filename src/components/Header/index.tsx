@@ -26,7 +26,7 @@ export function Header({ page, onSearchProduct }: HeaderProps) {
     return (
         <Container>
             <Content>
-                <InfoUser formatedName={formatedName} />
+                <InfoUser name={formatedName} />
 
                 {onSearchProduct && (
                     <ItemInput>

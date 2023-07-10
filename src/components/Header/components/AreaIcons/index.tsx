@@ -1,15 +1,17 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 
+import { RiStore2Fill, RiStore2Line } from "react-icons/ri";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import {
     HiLogout,
     HiOutlineShoppingCart,
     HiShoppingCart
 } from "react-icons/hi";
 
-import { Container } from "./styles";
 import { Modal } from "../../../Modal";
-import { useState } from "react";
+
+import { Container } from "./styles";
 
 interface AreaIconsProps {
     page: string;
@@ -29,20 +31,28 @@ export function AreaIcons({ page, onLogout }: AreaIconsProps) {
 
     return (
         <Container>
-            <Link to="/home">
-                {page === "home" && <AiFillHome size="1.5rem" />}
-                {page !== "home" && <AiOutlineHome size="1.5rem" />}
+            <Link to="/products">
+                {page === "products" && <RiStore2Fill size="1.5rem" />}
+                {page !== "products" && <RiStore2Line size="1.5rem" />}
 
-                {page === "home" && <strong>HOME</strong>}
-                {page !== "home" && <p>HOME</p>}
+                {page === "products" && <strong>PRODUCTS</strong>}
+                {page !== "products" && <p>PRODUCTS</p>}
             </Link>
 
             <Link to="/cart">
                 {page === "cart" && <HiShoppingCart size="1.5rem" />}
                 {page !== "cart" && <HiOutlineShoppingCart size="1.5rem" />}
 
-                {page === "cart" && <strong>MY CARTS</strong>}
-                {page !== "cart" && <p>MY CARTS</p>}
+                {page === "cart" && <strong>MY CART</strong>}
+                {page !== "cart" && <p>MY CART</p>}
+            </Link>
+
+            <Link to="/purchases">
+                {page === "purchases" && <AiFillHome size="1.5rem" />}
+                {page !== "purchases" && <AiOutlineHome size="1.5rem" />}
+
+                {page === "purchases" && <strong>PURCHASES</strong>}
+                {page !== "purchases" && <p>PURCHASES</p>}
             </Link>
             
             <button onClick={handleOpenLogoutModal}>
