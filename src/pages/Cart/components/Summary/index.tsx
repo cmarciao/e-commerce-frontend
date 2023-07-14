@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Cart from "../../../../types/Cart";
 import { formatCurrency } from "../../../../utils/formatCurrency";
 
@@ -5,7 +6,6 @@ import { Modal } from "../../../../components/Modal";
 import { Button } from "../../../../components/Button";
 
 import { Container, Content } from "./styles";
-import { useState } from "react";
 
 interface SummaryProps {
     isLoading: boolean;
@@ -26,45 +26,45 @@ export function Summary({ isLoading, cart, onConfirmCart }: SummaryProps) {
 
     return (
         <Container>
-            <h1>Resumo das compras</h1>
+            <h1>Summary of purchases</h1>
 
             <Content>
-                <p>Você tem {cart.amount} {cart.amount === 1 ? 'item' : 'itens'}</p>
+                <p>You have {cart.amount} {cart.amount === 1 ? 'item' : 'items'}</p>
                 <div>
-                    <span>Preço total</span>
+                    <span>Total price</span>
                     <span>
                         {formatCurrency(cart.total)}
                     </span>
                 </div>
                 <div>
-                    <span>Frete</span>
-                    <span>Grátis</span>
+                    <span>Freight</span>
+                    <span>Free</span>
                 </div>
 
                 <hr />
 
                 <div>
-                    <span>Preço total</span>
+                    <span>Final price</span>
                     <span>
                         {formatCurrency(cart.total)}
                     </span>
                 </div>
 
                 <Button onClick={handleOpenConfirmCartModal} >
-                    Confirmar compra
+                    Confirm purchase
                 </Button>
             </Content>
 
             <Modal
-                title="Confirmar a compra?"
+                title="Confirm the purchase?"
                 isVisible={isConfirmCartModalOpen}
                 isLoading={isLoading}
-                confirmLabel="Confirmar"
-                cancelLabel="Cancelar"
+                confirmLabel="Confirm"
+                cancelLabel="Cancel"
                 onConfirm={onConfirmCart}
                 onCancel={handleCloseConfirmCartModal}
             >
-                <p>Deseja finalizar as suas compras?</p>
+                <p>Want to finalize your purchases?</p>
             </Modal>
         </Container>
     )

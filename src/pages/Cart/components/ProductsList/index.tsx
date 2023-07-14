@@ -10,7 +10,7 @@ interface ProductsListProps {
 export function ProductsList({ products }: ProductsListProps) {
     return (
         <Container>
-            <h1>Carrinho de compras</h1>
+            <h1>Your shopping cart</h1>
             <div>
                 {products.map((product) => (
                     <ProductCartItem

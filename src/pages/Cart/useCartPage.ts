@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useCart } from "../../hooks/useCart";
 
-import CartService from "../../services/CartService";
 import Product from "../../types/Product";
+import CartService from "../../services/CartService";
 
 export function useCartPage() {
 	const navigate = useNavigate();

@@ -1,11 +1,11 @@
+import { useCartPage } from './useCartPage';
+
 import { Header } from '../../components/Header';
 import { Loader } from '../../components/Loader';
 
-import { useCartPage } from './useCartPage';
-
+import { Summary } from './components/Summary';
 import { EmptyCart } from './components/EmptyCart';
 import { ProductsList } from './components/ProductsList';
-import { Summary } from './components/Summary';
 
 import {
 	Container,
@@ -36,7 +36,7 @@ export function Cart() {
 
 			{!isLoadingCart && (
 				<Content>
-					{!hasProducts && <EmptyCart description='Seu carrinho está vazio.'/>}
+					{!hasProducts && <EmptyCart description='Your cart is empty.'/>}
 
 					{hasProducts && (
 						<Informations>
