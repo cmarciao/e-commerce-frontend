@@ -23,12 +23,12 @@ export function Thanks() {
             <Content>
                 <img src={thanksImg} alt="" />
 
-                <h1>Muito obrigado!</h1>
-                <p>Agradeço por ter usado esse meu mini e-commerce, espero que tenha gostado. 🙃</p>
+                <h1>Thank you so much!</h1>
+                <p>Thank you for using this mini e-commerce of mine, I hope you enjoyed it. 🙃</p>
 
                 <Link to={"/products"}>
                     <Button>
-                        Voltar para página inicial
+                        Back to home page
                     </Button>
                 </Link>
             </Content>
