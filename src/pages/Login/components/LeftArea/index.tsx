@@ -8,13 +8,13 @@ export function LeftArea() {
         <Container>
             <Content>
                 <div>
-                    <h1>Entre agora</h1>
-                    <p>Está na hora de você ver os melhores preços que o mercado pode oferecer sobre tecnologia em um só lugar, acesse agora a nossa plataforma usando seu email e senha de cadastro. Tenha um bom uso!</p>
+                    <h1>Log in now</h1>
+                    <p>The time has come for you to see the best prices that the market can offer in technology in one place, access our platform right now using your registration email and password. Have a good use!</p>
                 </div>
 
                 <AreaButton>
                     <Link to="/">
-                        <Button>Voltar</Button>
+                        <Button>Back</Button>
                     </Link>
                 </AreaButton>
             </Content>
