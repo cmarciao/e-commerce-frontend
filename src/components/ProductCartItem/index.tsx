@@ -1,7 +1,7 @@
 import Product from "../../types/Product";
+import { AiOutlineClose } from "react-icons/ai";
 
 import { Modal } from "../Modal";
-import { AiOutlineClose } from "react-icons/ai";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 import { LeftArea } from "./components/LeftArea";
@@ -54,15 +54,16 @@ export function ProductCartItem({ product }: ProductCartItemProps) {
             </button>
 
             <Modal
-                title={`Tem certeza que quer excluir o produto?`}
+                title="Are you sure you want to delete the product?"
                 isVisible={isDeleteProductModalOpen}
                 isLoading={isLoading}
-                confirmLabel='Excluir'
-                cancelLabel='Cancelar'
+                confirmLabel="Exclude"
+                cancelLabel="Cancel"
                 onCancel={handleCancelDeleteProductModal}
                 onConfirm={handleRemoveItem}
             >
-                <p>Você irá excluir o produto <strong>{product.name}</strong> da sua lista de pedidos no seu carrinho.</p>
+
+            <p>The product <strong>{product.name}</strong> will be deleted from your shopping cart.</p>
             </Modal>
         </Container>
     )
