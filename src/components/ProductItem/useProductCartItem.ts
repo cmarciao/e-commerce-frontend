@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+
 import Product from "../../types/Product";
 import { useCart } from "../../hooks/useCart";
 
@@ -22,15 +23,13 @@ export function useProductCartItem(product: Product) {
 
 	async function handleAddProducts() {
 		if(count === 0 ) {
-			toast.info("Informe a quantidade de produtos.");
+			toast.info('Enter the amount of products!');
 			return;
 		};
 		
 		setIsLoading(true);
 		
 		await handleAddProduct(product, count)
-		
-		toast.success('Produto cadastrado com sucesso!');
 
 		setIsLoading(false);
 		setCount(0);
