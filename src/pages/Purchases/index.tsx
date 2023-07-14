@@ -27,11 +27,11 @@ export function Purchases() {
 
 			{!isLoadingPurchases && (
 				<Content>
-					{!hasProducts && <EmptyCart description="Seu histórico de compras está vazio." />}
+					{!hasProducts && <EmptyCart description="Your purchases history is empty." />}
 
 					{hasProducts && (
 						<Informations>
-							<h1>Histórico de compras</h1>
+							<h1>Your purchases</h1>
 
 							{filteredPurchases.map((purchase) => (
 								<PurchaseItem
