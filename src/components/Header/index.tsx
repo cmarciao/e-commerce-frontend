@@ -32,7 +32,7 @@ export function Header({ page, onSearchProduct }: HeaderProps) {
                     <ItemInput>
                         <input
                             type="text"
-                            placeholder="Pesquise o seu produto"
+                            placeholder="Search your product"
                             onChange={(e) => onSearchProduct(e.target.value)}
                         />
                     </ItemInput>

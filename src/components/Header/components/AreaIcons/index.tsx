@@ -61,15 +61,15 @@ export function AreaIcons({ page, onLogout }: AreaIconsProps) {
             </button>
 
             <Modal
-                title="Você deseja fazer logout?"
+                title="Do you want to log out?"
                 isVisible={isLogoutModalOpen}
                 isLoading={false}
-                confirmLabel="Sair"
-                cancelLabel="Cancelar"
+                confirmLabel="Exit"
+                cancelLabel="Cancel"
                 onConfirm={onLogout}
                 onCancel={handleCloseLogoutModal}
             >
-                <p>Sua sessão será encerrada e você irá retornar para página de login.</p>
+                <p>Your session will be closed and you will return to the login page.</p>
             </Modal>
         </Container>
     );
