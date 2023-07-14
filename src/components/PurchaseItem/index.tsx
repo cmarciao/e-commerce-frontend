@@ -14,7 +14,7 @@ export function PurchaseItem({ purchase }: PurchaseItemProps) {
     const hasOneItem = purchase.products.length === 1;
     const purchaseName = 
         hasOneItem 
-        ? purchase.products[0].name
+        ? `${purchase.products[0].name} ${purchase.amount > 1 ? `(${purchase.amount})x` : ''}`
         : `${purchase.products[0].name} e mais ${purchase.products.length - 1}...`;
 
     return (
