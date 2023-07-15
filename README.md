@@ -45,6 +45,9 @@
   
   <h3>Register Page</h3>
   <img alt="Register page" src="https://github.com/cmarciao/e-commerce-frontend/assets/79059115/c0637151-f8f5-40b9-893d-2467bb3a6024" width="800px">
+
+  <h3>Empty Products Page</h3>
+  <img alt="Empty products page" src="https://github.com/cmarciao/e-commerce-frontend/assets/79059115/2a390749-bbad-44e9-bb8e-587a0703a028" width="800px">
   
   <h3>Products Page</h3>
   <img alt="Products page" src="https://github.com/cmarciao/e-commerce-frontend/assets/79059115/f7697b4b-5347-4349-b282-5ebe7d9b7a9b" width="800px">
