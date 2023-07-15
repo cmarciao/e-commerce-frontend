@@ -8,21 +8,21 @@ export function LeftArea() {
        <Container>
             <Content>
                 <div>
-                    <h1>Bem Vindo ao</h1>
-                    <h1>E-commerce Vtex</h1>
-                    <p>Faça o seu cadastro ou realize o seu Login para começar a ter
-                        acesso aos nossos produtos. Aqui você encontra os melhores
-                        produtos de tecnologias com os melhores preços do mercado, não
-                        perca mais tempo e acesso nossa plataforma.
+                    <h1>Welcome to</h1>
+                    <h1>E-commerce</h1>
+                    <p>Register or Login to start having
+                        access to our products. Here you will find the best
+                        technology products with the best prices on the market, do not
+                        waste more time and access our platform.
                     </p>
                 </div>
 
                 <AreaButton>
                     <Link to="/register">
-                        <Button>Cadastrar</Button>
+                        <Button>Register</Button>
                     </Link>
                     <Link to="/login">
-                        <Button>Fazer login</Button>
+                        <Button>Sig In</Button>
                     </Link>
                 </AreaButton>
             </Content>

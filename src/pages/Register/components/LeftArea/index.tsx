@@ -7,14 +7,13 @@ export function LeftArea() {
         <Container>
             <Content>
                 <div>
-                    <h1>Faça seu Cadastro</h1>
-                    <p>Para começar a acessar nossa plataforma crie um login com email e senha, e então poderá se aventurar pela maior plataforma de E-commerce do mundo!.
-                    </p>
+                    <h1>Register account</h1>
+                    <p>To start accessing our platform create a login with email and password, and then you can venture into the largest E-commerce platform in the world!</p>
                 </div>
 
                 <AreaButton>
                     <Link to="/">
-                        <Button>Voltar</Button>
+                        <Button>Back</Button>
                     </Link>
                 </AreaButton>
             </Content>

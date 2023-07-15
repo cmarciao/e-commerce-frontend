@@ -33,7 +33,7 @@ export function RightArea({
                         Icon={FiUser}
                         type="text"
                         error={getErrorByFieldName("name")}
-                        placeholder="Informe seu nome"
+                        placeholder="Nome"
                         onChange={(e) => {
                             setName(e.target.value);
                         }}
@@ -43,7 +43,7 @@ export function RightArea({
                         Icon={HiOutlineMail}
                         type="email"
                         error={getErrorByFieldName("email")}
-                        placeholder="Informe seu email"
+                        placeholder="Email"
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
@@ -53,7 +53,7 @@ export function RightArea({
                         Icon={AiOutlineLock}
                         type="password"
                         error={getErrorByFieldName("password")}
-                        placeholder="Informe sua senha"
+                        placeholder="Password"
                         onChange={(e) => {
                             setPassword(e.target.value);
                         }}
@@ -62,7 +62,7 @@ export function RightArea({
 
                 <AreaButton>
                     <Button type="submit" isLoading={isLoading}>
-                        Cadastrar
+                        Register
                     </Button>
                 </AreaButton>
             </form>
