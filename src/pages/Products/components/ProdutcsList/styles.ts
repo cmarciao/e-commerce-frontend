@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-    padding: 6rem 1rem 2rem;
-`;
-
 export const Content = styled.div`
     display: grid;
     grid-template-areas: 

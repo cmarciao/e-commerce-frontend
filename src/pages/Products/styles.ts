@@ -6,3 +6,7 @@ export const Container = styled.div`
     
     margin: 0 auto;
 `;
+
+export const Content = styled.div`
+    padding: 6rem 1rem 2rem;
+`;

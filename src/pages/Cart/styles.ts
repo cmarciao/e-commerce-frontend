@@ -7,14 +7,12 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    padding: 3rem 1rem 2rem;
+    padding: 6rem 1rem 2rem;
 `;
 
 export const Informations = styled.section `
     display: flex;
     justify-content: space-between;
-
-    margin-top: 3rem;
 
     gap: 1.5rem;
     

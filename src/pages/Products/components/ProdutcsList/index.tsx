@@ -1,7 +1,7 @@
 import { ProductItem } from "../../../../components/ProductItem";
 import Product from "../../../../types/Product";
 
-import { Container, Content } from "./styles";
+import { Content } from "./styles";
 
 interface ProductsListProps {
     products:Product[];
@@ -9,7 +9,7 @@ interface ProductsListProps {
 
 export function ProductsList({ products }: ProductsListProps) {
     return (
-        <Container>
+        <>
             <h1>Hello, welcome</h1>
             <Content>
                 {products.map((product) => (
@@ -19,6 +19,6 @@ export function ProductsList({ products }: ProductsListProps) {
                     />
                 ))}
             </Content>
-        </Container>
+        </>
     );
 }

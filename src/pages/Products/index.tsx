@@ -3,10 +3,9 @@ import { useHome } from './useProducts';
 import { Header } from '../../components/Header';
 import { Loader } from '../../components/Loader';
 import { ProductsList } from './components/ProdutcsList';
+import { EmptyCart } from '../Cart/components/EmptyCart';
 
-import {
-	Container
-} from './styles';
+import { Container, Content } from './styles';
 
 export function Products() {
 	const {
@@ -14,6 +13,8 @@ export function Products() {
 		isLoadingProducts,
 		filteredProducts
 	} = useHome();
+
+	const hasProducts = filteredProducts.length > 0;
 
 	return (
 		<Container>
@@ -25,7 +26,13 @@ export function Products() {
 			<Loader isLoading={isLoadingProducts} />
 
 			{!isLoadingProducts && (
-				<ProductsList products={filteredProducts} />
+				<Content>
+					{!hasProducts && <EmptyCart description='Oh, we do not have any products.'/>}
+
+					{hasProducts && (
+						<ProductsList products={filteredProducts} />
+					)}
+				</Content>
 			)}
 		</Container>
 	);
