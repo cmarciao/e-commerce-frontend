@@ -46,7 +46,9 @@ export function CartProvider({ children }: CartProviderProps) {
 	}, []);
 
 	async function handleAddProduct(product: Product, count: number) {
-		if(!cart) return;
+		if(!cart) {
+			await loadCart();
+		}
 		
 		const product_ids = [];
 		for(let i = 0; i < count; i++) {
