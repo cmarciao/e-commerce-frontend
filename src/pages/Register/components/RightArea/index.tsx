@@ -33,7 +33,7 @@ export function RightArea({
                         Icon={FiUser}
                         type="text"
                         error={getErrorByFieldName("name")}
-                        placeholder="Nome"
+                        placeholder="Name"
                         onChange={(e) => {
                             setName(e.target.value);
                         }}
