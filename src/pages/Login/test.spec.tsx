@@ -1,9 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
 import { BrowserRouter } from 'react-router-dom';
 import { Login } from '.';
-import { ToastContainer } from 'react-toastify';
+import { TestService } from '../../tests/TestService';
 
 const mockNavigate = jest.fn();
 jest.mock('react-router', () => ({
@@ -12,98 +9,73 @@ jest.mock('react-router', () => ({
 }));
 
 function renderPage() {
-    render(
+    return (
         <BrowserRouter>
             <Login />
-            
-            <ToastContainer
-                theme="dark"
-                position="top-right"
-                autoClose={1000 * 2}
-                closeOnClick
-                pauseOnHover={false}
-            />
         </BrowserRouter>
     );
 }
 
 describe('Login page', () => {
-    it('should render correctly', () => {
-        renderPage();
-        expect(screen.getByText(`Log in now`)).toBeInTheDocument();
+    it('should render correctly', () => {    
+        const loginTest = new TestService(renderPage())
+        loginTest.checkIfTextAppear('Log in now');
     });
     
     it('shloud return to the initial page by hiting the back button', () => {
-        renderPage();
-
-        const btnBack = screen.getByText('Back');
-        fireEvent.click(btnBack);
+        const loginTest = new TestService(renderPage());
+        loginTest.clickButtonByText('Back');
 
         expect(mockNavigate).toHaveBeenCalledWith('/', {"replace": true, "state": undefined});
     });
 
     it('should appear empty email error in email login field', () => {
-        renderPage();
+        const loginTest = new TestService(renderPage());
 
-        const iptEmail = screen.getByPlaceholderText('Email');
-        fireEvent.change(iptEmail, {target: {value: 'marciaocassio@gmail.com'}});
-
-        const btnSignIn = screen.getByText('Sign In');
-        fireEvent.click(btnSignIn);
-
-        expect(screen.queryByText('Informe o seu email.')).toBeNull();
-        expect(screen.getByText('A senha deve ter mais de 8 caracteres.')).toBeInTheDocument();
+        loginTest
+            .typeInputByPlaceholder('Email', 'mockedEmail@gmail.com')
+            .clickButtonByText('Sign In')
+            .checkIfTextNotAppear('Informe o seu email.')
+            .checkIfTextAppear('A senha deve ter mais de 8 caracteres.');
     });
     
     it('should appear empty password error in password login field', () => {
-        renderPage();
-        
-        const iptPassword = screen.getByPlaceholderText('Password');
-        fireEvent.change(iptPassword, {target: {value: 'mockedPassword'}});
+        const loginTest = new TestService(renderPage());
 
-        const btnSignIn = screen.getByText('Sign In');
-        fireEvent.click(btnSignIn);
-        
-        expect(screen.getByText('Informe o seu email.')).toBeInTheDocument();
-        expect(screen.queryByText('A senha deve ter mais de 8 caracteres.')).toBeNull();
+        loginTest
+            .typeInputByPlaceholder('Password', 'mockedPassword')
+            .clickButtonByText('Sign In')
+            .checkIfTextAppear('Informe o seu email.')
+            .checkIfTextNotAppear('A senha deve ter mais de 8 caracteres.');
     });
 
     it('should appear empty form errors in email and password login fields', () => {
-        renderPage();
+        const loginTest = new TestService(renderPage());
 
-        const btnSignIn = screen.getByText('Sign In');
-        fireEvent.click(btnSignIn);
-
-        expect(screen.getByText('Informe o seu email.')).toBeInTheDocument();
-        expect(screen.getByText('A senha deve ter mais de 8 caracteres.')).toBeInTheDocument();
-    })
+        loginTest
+            .clickButtonByText('Sign In')
+            .checkIfTextAppear('Informe o seu email.')
+            .checkIfTextAppear('A senha deve ter mais de 8 caracteres.');
+    });
     
     it('should appear invalid email error in email login fields', () => {
-        renderPage();
+        const loginTest = new TestService(renderPage());
 
-        const iptEmail = screen.getByPlaceholderText('Email');
-        fireEvent.change(iptEmail, {target: {value: 'm'}});
-
-        const btnSignIn = screen.getByText('Sign In');
-        fireEvent.click(btnSignIn);
-
-        expect(screen.getByText('O email não é válido.')).toBeInTheDocument();
-        expect(screen.getByText('A senha deve ter mais de 8 caracteres.')).toBeInTheDocument();
+        loginTest
+            .typeInputByPlaceholder('Email', 'm')
+            .clickButtonByText('Sign In')
+            .checkIfTextAppear('O email não é válido.')
+            .checkIfTextAppear('A senha deve ter mais de 8 caracteres.');
     });
 
     it('should not appear error when try login', async () => {
-        renderPage();
+        const loginTest = new TestService(renderPage());
 
-        const iptEmail = screen.getByPlaceholderText('Email');
-        fireEvent.change(iptEmail, {target: {value: 'mockedEmail_emailMocked@gmail.com'}})
-
-        const iptPassword = screen.getByPlaceholderText('Password');
-        fireEvent.change(iptPassword, {target: {value: 'mockedPassword12345678'}});
-
-        const btnSignIn = screen.getByText('Sign In');
-        fireEvent.click(btnSignIn);
-
-        expect(screen.queryByText('O email não é válido.')).not.toBeInTheDocument();
-        expect(screen.queryByText('A senha deve ter mais de 8 caracteres.')).not.toBeInTheDocument();
+        loginTest
+            .typeInputByPlaceholder('Email', 'mockedEmail_emailMocked@gmail.com')
+            .typeInputByPlaceholder('Password', 'mockedPassword12345678')
+            .clickButtonByText('Sign In')
+            .checkIfTextNotAppear('O email não é válido.')
+            .checkIfTextNotAppear('A senha deve ter mais de 8 caracteres.');
     });
 });
