@@ -1,8 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
-
 import { BrowserRouter } from "react-router-dom";
 import { PageInital } from ".";
+import { TestService } from '../../tests/TestService';
 
 const mockNavigate = jest.fn();
 jest.mock('react-router', () => ({
@@ -11,7 +9,7 @@ jest.mock('react-router', () => ({
 }));
 
 function renderPage() {
-    render (
+    return (
         <BrowserRouter>
             <PageInital />
         </BrowserRouter>
@@ -20,24 +18,20 @@ function renderPage() {
 
 describe('Initial page', () => {
     it('shoudl render correctly', () => {
-        renderPage();
-        expect(screen.getByText('Welcome to')).toBeInTheDocument();
+        const initialPageTest = new TestService(renderPage());
+        initialPageTest.checkIfTextAppear('Welcome to');
     });
-
+    
     it('shloud navigate to login page by hiting the sign in button', () => {
-        renderPage();
-
-        const btnLogin = screen.getByText('Sig In');
-        fireEvent.click(btnLogin);
+        const initialPageTest = new TestService(renderPage());
+        initialPageTest.clickButtonByText('Sig In');
 
         expect(mockNavigate).toHaveBeenCalledWith('/login', {"replace": false, "state": undefined})
     });
 
     it('should navigate to register page by hiting the register button', () => {
-        renderPage();
-
-        const btnRegister = screen.getByText('Register');
-        fireEvent.click(btnRegister);
+        const initialPageTest = new TestService(renderPage());
+        initialPageTest.clickButtonByText('Register');
 
         expect(mockNavigate).toHaveBeenCalledWith('/register', {"replace": false, "state": undefined});
     });
