@@ -4,7 +4,7 @@ import { Container, Overlay } from "./styles";
 import { ReactPortal } from "../ReactPortal";
 import { useAnimatedUmount } from "../../hooks/useAnimatedUmount";
 
-interface ModalProps {
+export interface ModalProps {
     title: string;
     isVisible: boolean;
     isLoading: boolean;
